@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Basic Laws</title>
+    <!-- Bootstrap CSS for Responsive Design -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <!-- Custom CSS -->
+    <style>
+       /* Custom styles to make the page more attractive */
+       body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Dark Background */
+            color: #f0f0f0; /* Light text for contrast */
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #1d1d1d; /* Dark Navbar */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 2rem;
+        }
+
+        .navbar-nav .nav-item a {
+            color: #ffffff;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-transform: uppercase;
+        }
+
+        .navbar-nav .nav-item a:hover {
+            color: #007bff; /* Highlight color on hover */
+        }
+
+
+       /* Content Area */
+        #main {
+            padding: 30px 20px;
+        }
+
+        /* Align heading and search bar in the same row */
+        .heading {
+            display: flex;
+            justify-content: space-between; /* Space between heading and search bar */
+            align-items: center; /* Vertically center the items */
+            margin-bottom: 20px;
+        }
+
+        .heading h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .Search-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 50%;
+        }
+
+        .Search-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .Search-container button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .Sort, .Filter {
+            margin: 15px 0;
+        }
+
+        .Sort label, .Filter label {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .Sort select, .Filter select {
+            width: 60%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+
+       /* Content Area */
+        #main {
+            padding: 30px 20px;
+        }
+
+        /* Align heading and search bar in the same row */
+        .heading {
+            display: flex;
+            justify-content: space-between; /* Space between heading and search bar */
+            align-items: center; /* Vertically center the items */
+            margin-bottom: 20px;
+        }
+
+        .heading h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .Search-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 50%;
+        }
+
+        .Search-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .Search-container button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .Sort, .Filter {
+            margin: 15px 0;
+        }
+
+        .Sort label, .Filter label {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .Sort select, .Filter select {
+            width: 60%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+           /* Button Styles */
+        .btn-info {
+            background-color: #007bff;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-info:hover {
+            background-color: #0056b3;
+            transform: scale(1.10);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Law Cards Section */
+        .container {
+            margin-top: 30px;
+             gap: 30px;
+        }
+
+        .card {
+            background-color: #2c3e50;
+            color: #ecf0f1;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+            margin-bottom: 20px;
+            padding: 15px;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        .card h2{
+            background-color: #2c3e50; /* Same as card background */
+            color: #ecf0f1; /* Light text color */
+            padding: 10px 15px; /* Add padding for better spacing */
+            border-radius: 5px; /* Optional: Add rounded corners to the heading */
+            margin: 0; /* Remove default margin */
+            text-align: center;
+        }
+        .card-body {
+            flex-grow: 1;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Ensure all card elements are aligned correctly */
+        .card h2, .card h3, .card-body h5, .card-body p {
+            margin-bottom: 10px;
+        }
+
+        .card-footer {
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+            background-color: #3498db;
+
+        }
+
+        .card-footer a {
+            text-decoration: none;
+             color: #ffffff;
+        }
+
+        .card-footer a:hover {
+            color: #16a085; /* Slightly darker accent color on hover */
+        }
+
+        /* Grid Layout */
+        .container .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .container .col-md-4 {
+            flex: 1 1 30%;
+            margin-bottom: 20px;
+        }
+
+
+       /* Video style */
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #333;
+            border-radius: 8px;
+            margin-top: 20px;
+        }
+
+        .responsive-iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Pagination */
+        .pagination {
+            display:flex;
+            justify-content:center;
+            margin-top: 20px;
+        }
+
+        /* Style for the links */
+        .pagination .step-links a {
+            color: #00BFFF; /* Light blue color for links */
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+
+        }
+
+        /* Hover effect for links */
+        .pagination .step-links a:hover {
+            background-color: #333; /* Darker background on hover */
+            color: white; /* Ensure text is white on hover */
+        }
+
+        /* Current page number styling */
+        .pagination .current {
+            color: yellow; /* Yellow for current page number */
+            font-weight: bold;
+        }
+
+        /* Pagination spacing */
+        .pagination .step-links {
+            display: inline-block;
+            padding: 10px;
+            background-color: #222; /* Dark background for the pagination container */
+            border-radius: 10px;
+        }
+
+        /* Footer Styles */
+        .footer {
+            background-color: #1d1d1d;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .footer-links li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .footer-bottom p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .footer-bottom a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+
+<body>
+
+    {% csrf_token %}
+
+    <!-- Header -->
+    <div class="header">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <h1>LAW for Everyone</h1>
+                </a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/update_user/{{ r.User_Id }}">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/basic_laws">Basic Laws</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register_case">Register Case</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lawyer">Lawyers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-info">
+                            <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Content Section -->
+  <div id="main">
+        <div class="heading">
+            <h1 class="col-md-6 d-flex align-items-center">Lawyers List</h1>
+            <form method="POST" class="col-md-6 d-flex align-items-center">
+                {% csrf_token %}
+                <div class="Search-container d-flex">
+                    <input type="text" name="Search" id="Search" placeholder="Search...." required class="form-control me-2">
+                    <button type="submit" name="Search1" id="Search1" class="btn btn-info">Search</button>
+                </div>
+            </form>
+        </div>
+            <form method="POST" class="d-flex">
+                {% csrf_token %}
+                <div class="Sort col-md-6  align-items-center">
+                    <label for="Sort">Sort:</label>
+                    <select id="Sort" name="Sort" onchange="this.form.submit()" class="form-select ms-2">
+                        <option value="All" selected>All</option>
+                        <option value="Name_asc" {% if Sort == "Name_asc" %}selected{% endif %}>Name(A-Z)</option>
+                        <option value="Name_desc" {% if Sort == 'Name_desc' %}selected{% endif %}>Name(Z-A)</option>
+                    </select>
+                </div>
+                <div class="Filter col-md-6  align-items-center">
+                    <label for="filter" >Filter by Category:</label>
+                    <select id="Filter" name="Filter" onchange="this.form.submit()" class="form-select ms-2">
+                        <option value="All" selected>All</option>
+                        <option value="Criminal" {% if Filter == 'Criminal' %}selected{% endif %}>Criminal</option>
+                        <option value="Cyber" {% if Filter == 'Cyber' %}selected{% endif %}>Cyber</option>
+                        <option value="Environment" {% if Filter == 'Environment' %}selected{% endif %}>Environment</option>
+                        <option value="Family" {% if Filter == 'Family' %}selected{% endif %}>Family</option>
+                        <option value="Civil" {% if Filter == 'Civil' %}selected{% endif %}>Civil</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+
+        <!-- Law Cards Section -->
+        <div class="container">
+            <div class="row">
+                {% for i in page_obj %}
+                <div class="col-md-4">
+                    <div class="card">
+                        <h2><b>{{ i.Law_Title }}</b></h2>
+                        <h3>Category: {{ i.Law_Category }}</h3>
+                        <hr class="styled-line">
+                        <div class="card-body">
+                            <h5>Relevant Law:<br><b>{{ i.Law_Relevant }}</b></h5>
+                            <p>Punishment:<br>{{ i.Law_Punishment }}</p>
+                            <p>Description:<br>{{ i.Law_Description }}</p>
+                        </div>
+                        <div class="video">
+                            <div class="video-wrapper">
+                                <iframe class="responsive-iframe" src="https://www.youtube.com/embed/{{ i.Law_link }}?autoplay=0&mute=1"
+                                frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen>
+                                </iframe>
+                            </div>
+                        </div>
+
+
+                        <div class="card-footer">
+                            <a href="/register_case">Register Case</a> |
+                            <a href="/book_lawyer">Book Lawyer</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+   <!-- Pagination Controls -->
+ <div class="pagination">
+    <span class="step-links">
+        {% if page_obj.has_previous %}
+            <!-- Add page=1 here to always reset to the first page when navigating -->
+            <a href="?page=1&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">First</a>
+            <a href="?page={{ page_obj.previous_page_number }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Previous</a>
+        {% endif %}
+
+        <span class="current">
+            Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+        </span>
+
+        {% if page_obj.has_next %}
+            <!-- Again, add page=1 here for consistency -->
+            <a href="?page={{ page_obj.next_page_number }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Next</a>
+            <a href="?page={{ page_obj.paginator.num_pages }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Last</a>
+        {% endif %}
+    </span>
+</div>
+
+
+ <!-- Footer -->
+    <div class="footer">
+        <h1>LAW for Everyone</h1>
+
+        <ul class="footer-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/update_user/{{ r.User_Id }}">My Profile</a></li>
+            <li><a href="/basic_laws">Basic Laws</a></li>
+            <li><a href="/register_case">Register Case</a></li>
+            <li><a href="/lawyer">Lawyers</a></li>
+            <li><a href="/logout">Log Out</a></li>
+            <li>
+                <button type="button" class="btn btn-info">
+                    <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                </button>
+            </li>
+        </ul>
+        <div class="social-media">
+            <ion-icon name="logo-facebook" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-youtube" style="color:red;"></ion-icon>
+            <ion-icon name="logo-linkedin" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-discord" style="color:purple;"></ion-icon>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Law For Everyone. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+
+</body>
+</html>

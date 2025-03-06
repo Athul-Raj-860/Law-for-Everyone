@@ -1,0 +1,217 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Book Lawyer</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <style>
+        /* Body Styles */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #000000;  /* Black background */
+            color: #fff;  /* White text color */
+            padding: 20px;
+        }
+
+        h1 {
+            text-align: center;
+             color: #1e90ff;   /* Light color for the heading */
+            margin-bottom: 30px;
+            font-size: 36px;
+            font-weight: bold;
+        }
+        /* Register Styles */
+        .Register-container {
+            background-color: #212529;  /* Dark background for the form */
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);  /* Soft shadow */
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .Register-form input, .Register-form select, .Register-form textarea {
+            width: 100%;
+            padding: 15px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            font-size: 16px;
+            transition: border-color 0.3s ease-in-out;
+            background-color: #495057;  /* Darker background for input */
+            color: #fff;  /* White text inside input */
+        }
+
+        .Register-form input::placeholder,
+        .Register-form select::placeholder,
+        .Register-form textarea::placeholder {
+            color: #fff;  /* White placeholder text */
+        }
+
+        .Register-form input:focus, .Register-form select:focus, .Register-form textarea:focus {
+            border-color: #007bff;
+            outline: none;
+            background-color: #343a40;  /* Darker focus background */
+        }
+
+        .Register-form .col-md-6 {
+            padding: 20px;
+            border-right: 1px solid #ddd;
+        }
+
+        .Register-form .row {
+            display: flex;
+            flex-wrap: wrap;
+        }
+
+        .Register-form .col-md-6:last-child {
+            border-right: none;
+        }
+
+        .Register-form h2 {
+            color: #f8f9fa;  /* Light color for the subheadings */
+            font-size: 22px;
+            margin-bottom: 20px;
+            font-weight: 600;
+        }
+
+        .Register-form h3 {
+            color: #f8f9fa;  /* Light color for the smaller subheadings */
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+
+        .Register-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+        }
+
+        .Register-form button a {
+            color: white;
+            text-decoration: none;
+            display: block;
+        }
+
+        .Register-form button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        .Register-form button:active {
+            background-color: #003b6d;
+            transform: translateY(2px);
+        }
+
+        select {
+            cursor: pointer;
+        }
+
+
+
+        .filter-container select {
+            width: 100%;
+            padding: 15px;  /* Increased padding for consistency */
+            font-size: 16px;
+            background-color: #495057;  /* Darker background for selects */
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            transition: border-color 0.3s ease-in-out;
+            color: #fff;  /* White text inside select */
+            box-sizing: border-box;
+        }
+
+        .filter-container select:focus {
+            border-color: #007bff;
+        }
+
+        .form-header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+    </style>
+</head>
+<body>
+   <h1>Book Lawyer</h1>
+<div class="Register-container">
+    <form class="Register-form" method="POST">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <h2>Personal Details</h2>
+                <input type="text" id="Name" name="Name" placeholder="Enter Name" required><br>
+                <input type="text" id="Number" name="Number" placeholder="Enter Number" required><br>
+                <input type="email" id="Email" name="Email" placeholder="Enter Email" required><br>
+                <input type="text" id="City" name="City" placeholder="Enter City" required><br>
+                <input type="text" id="State" name="State" placeholder="Enter State" required><br>
+            </div>
+            <div class="col-md-6">
+                <h2>Booking Details</h2>
+                <div class="filter-container">
+                      <select id="Category" name="Category" onchange="filterLawyers()" >
+                        <option value="All" selected>All</option>
+                        <option value="Criminal">Criminal</option>
+                        <option value="Cyber">Cyber</option>
+                        <option value="Environment">Environment</option>
+                        <option value="Family">Family</option>
+                        <option value="Civil">Civil</option>
+                    </select>
+                </div>
+                <div class="filter-container">
+                    <select id="LawyerName" name="LawyerName" required>
+                        <option value="">Select Lawyer Name</option>
+                        {% for i in LawyersNames %}
+                            <option value="{{ i.Name }}"   data-category="{{ i.Category }}">{{ i.Name }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+
+                <input type="date" id="Appointment_Date" name="Appointment_Date" placeholder="Enter Date" required><br>
+
+                <select name="Appointment_Time" id="Appointment_Time" required>
+                    <option value="">Select Time Slot</option>
+                    <option value="9am to 10am">9 am to 10 am</option>
+                    <option value="10am to 11am">10 am to 11 am</option>
+                    <option value="11 am to 12 pm">11 am to 12 pm</option>
+                    <option value="2 pm to 3 pm">2 pm to 3 pm</option>
+                    <option value="3 pm to 4 pm">3 pm to 4 pm</option>
+                    <option value="4 pm to 5 pm">4 pm to 5 pm</option>
+                    <option value="5 pm to 6 pm">5 pm to 6 pm</option>
+                </select>
+
+                <select name="Contact_Time" id="Contact_Time" required>
+                    <option value="">Select Time to Contact</option>
+                    <option value="9 am to 12 pm">9 am to 12 pm</option>
+                    <option value="2 pm to 5 pm">2 pm to 5 pm</option>
+                    <option value="5 pm to 9 pm">5 pm to 9 pm</option>
+                </select>
+            </div>
+        </div>
+         <button type="submit">Book Lawyer</button>
+    </form>
+</div>
+<script>
+    function filterLawyers() {
+        var category = document.getElementById('Category').value;  // Get selected category
+        var lawyers = document.getElementById('LawyerName').options;  // Get all lawyer options
+
+        for (var i = 0; i < lawyers.length; i++) {
+            var lawyerCategory = lawyers[i].getAttribute('data-category');  // Get the category of each lawyer
+            if (category === "All" || lawyerCategory === category) {
+                lawyers[i].style.display = "block";  // Show lawyer
+            } else {
+                lawyers[i].style.display = "none";  // Hide lawyer
+            }
+        }
+    }
+
+</script>
+</body>
+</html>

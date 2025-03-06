@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>BookingLawyerHistory</title>
+   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <style>
+        /* General Styles */
+        body {
+            background-color: #121212; /* Dark background */
+            color: #e0e0e0; /* Light text color for readability */
+            font-family: Arial, sans-serif;
+        }
+
+        /* Header */
+        .header {
+            margin-bottom: 30px;
+        }
+        .navbar {
+            background-color: #1e1e1e; /* Dark background for the navbar */
+        }
+        .navbar-brand h1 {
+            color: #f1f1f1; /* Light color for brand */
+        }
+        .navbar-nav .nav-link {
+            color: #ffffff; /* Light text color for links */
+        }
+        .navbar-nav .nav-link:hover {
+            color: #009688; /* Hover effect on nav links */
+        }
+        .btn-info {
+            background-color: #008C8C;
+            border-color: #008C8C;
+        }
+        .btn-info:hover {
+            background-color: #006666;
+            border-color: #006666;
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1e1e1e; /* Dark footer background */
+            color: #ffffff;
+            padding: 30px 0;
+            text-align: center;
+        }
+        .footer h1 {
+            color: #f1f1f1;
+        }
+        .footer-links {
+            list-style: none;
+            padding: 0;
+        }
+        .footer-links li {
+            display: inline-block;
+            margin-right: 15px;
+        }
+        .footer-links a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .footer-links a:hover {
+            color: #009688;
+        }
+        .social-media {
+            margin-top: 20px;
+        }
+        .social-media ion-icon {
+            margin: 0 10px;
+            font-size: 30px;
+        }
+        .footer-bottom {
+            margin-top: 30px;
+            font-size: 12px;
+        }
+        .footer-bottom a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+        .footer-bottom a:hover {
+            color: #009688;
+        }
+
+        /* Content area */
+        #main {
+            padding: 30px 15px;
+        }
+        .heading h1 {
+            color: #ffffff;
+        }
+        .Search-container {
+            margin-top: 15px;
+        }
+        .card {
+            background-color: #333333; /* Dark background for cards */
+            color: #e0e0e0;
+            border: none;
+            margin-bottom: 20px;
+            border-radius: 8px;
+        }
+        .card h4 {
+            color: #ffffff;
+        }
+        .card p {
+            color: #d3d3d3;
+        }
+        .card a {
+            color: #00bcd4; /* Link color */
+            text-decoration: none;
+        }
+        .card a:hover {
+            color: #009688; /* Hover effect for links */
+        }
+        .pagination a {
+            color: #ffffff;
+            text-decoration: none;
+            margin: 0 5px;
+        }
+        .pagination a:hover {
+            color: #009688; /* Pagination link hover effect */
+        }
+        .pagination .current {
+            color: #ffffff;
+        }
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+
+    <!-- Header -->
+    <div class="header">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <h1>LAW for Everyone</h1>
+                </a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/update_user/{{ r.User_Id }}">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/basic_laws">Basic Laws</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register_case">Register Case</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lawyer">Lawyers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-info">
+                            <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+        <!-- Content Area -->
+    <div id="main">
+        <div class="heading">
+            <h1 class="col-md-6">Booking History</h1>
+            <form method="POST" class="col-md-6">
+                {% csrf_token %}
+                <div class="Search-container d-flex">
+                    <input type="text" name="Search" id="Search" placeholder="Search...." required class="form-control me-2">
+                    <button type="submit" name="Search1" id="Search1" class="btn btn-info">Search</button>
+                </div>
+            </form>
+        </div>
+       {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            {% for i in page_obj %}
+            <div class="col-md-3">
+                <div class="card">
+                    <h4>Appointment Information:</h4>
+                    <p><strong>Lawyer Name:</strong> {{ Lawyer.Name }}</p>
+                    <p><strong>Category:</strong> {{ Lawyer.Category }}</p>
+                    <p><strong>Appointment Date:</strong> {{ Lawyer.Appointment_Date }}</p>
+                    <p><strong>Appointment Time:</strong> {{ Lawyer.Appointment_Time }}</p>
+                    <p><strong>Price:</strong> ${{ Lawyer_details.Price }}</p>
+                    <button>
+                        <a href="/book_lawyer/{{ Lawyer_details.Lawyer_Id }}"><b>Book Again</b></a>
+                    </button>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Pagination Controls -->
+     <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <a href="?page=1&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <a href="?page={{ page_obj.next_page_number }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+
+ <!-- Footer -->
+    <div class="footer">
+        <h1>LAW for Everyone</h1>
+
+        <ul class="footer-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/update_user/{{ r.User_Id }}">My Profile</a></li>
+            <li><a href="/basic_laws">Basic Laws</a></li>
+            <li><a href="/register_case">Register Case</a></li>
+            <li><a href="/lawyer">Lawyers</a></li>
+            <li><a href="/logout">Log Out</a></li>
+            <li>
+                <button type="button" class="btn btn-info">
+                    <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                </button>
+            </li>
+        </ul>
+        <div class="social-media">
+            <ion-icon name="logo-facebook" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-youtube" style="color:red;"></ion-icon>
+            <ion-icon name="logo-linkedin" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-discord" style="color:purple;"></ion-icon>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Law For Everyone. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+
+
+</body>
+</html>

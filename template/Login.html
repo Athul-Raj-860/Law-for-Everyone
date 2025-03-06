@@ -1,0 +1,189 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        {% load static %}
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image:url("/static/images/login.jpeg");
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+
+        h1 {
+            font-size: 2.5rem;
+            color: blue;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.3);
+        }
+
+        .Login-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 400px;
+            text-align: center;
+            box-sizing: border-box;
+        }
+
+        .Login-form input {
+            width: 70%;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #ccc;
+            font-size: 16px;
+            transition: 0.3s;
+        }
+
+        .Login-form input:focus {
+            border-color: #2575fc;
+            outline: none;
+            box-shadow: 0 0 5px rgba(37, 117, 252, 0.7);
+        }
+
+
+
+        .Login-form button {
+            width: 100%;
+            padding: 15px;
+            background-color: #2575fc;
+            color: #fff;
+            border: none;
+            border-radius: 10px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: 0.3s;
+        }
+
+        .Login-form button:hover {
+            background-color: #0066cc;
+        }
+
+        .Login-form a {
+            text-decoration: none;
+            color: #2575fc;
+            font-size: 14px;
+            transition: 0.3s;
+        }
+
+        .Login-form a:hover {
+            color: #0066cc;
+            text-decoration: underline;
+        }
+
+        .Login-form .forgot-password {
+            margin-top: 10px;
+        }
+
+        .Login-form .signup-link {
+            margin-top: 20px;
+            display: block;
+        }
+
+        .Password-container {
+            position: relative;
+            display: inline-block;
+        }
+
+        input[type="password"], input[type="text"] {
+            padding: 10px;
+            font-size: 16px;
+            width: 250px;
+        }
+
+        .toggle-icon {
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .ion-icon{
+            position: absolute;
+            right: 10px;
+            top: 50%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="Login-container">
+        <h1>L4E Login</h1>
+        <form class="Login-form" method="POST">
+            {% csrf_token %}
+            <div>
+                <h3>Log In</h3>
+                <div class="username">
+                  <ion-icon name="person-circle-outline"></ion-icon>
+                  <input type="text" name="Username" id="UserName" placeholder="Enter Username" required>
+                </div>
+                <div class="Password-container">
+                    <ion-icon name="lock-closed-outline"></ion-icon>
+                    <input type="password" name="Password" id="Password" placeholder="Enter Password" required>
+                    <span class="toggle-icon" id="toggle-icon"><ion-icon name="eye-outline" name="show" id="show"></ion-icon>
+                    <ion-icon name="eye-off-outline" name="hide" id="hide" style="display: none;"></ion-icon></span>
+                </div>
+
+                <div class="forgot-password">
+                    <a href="/forgot_password">Forgot Password?</a>
+                </div>
+
+                {% if Error %}
+                    <div class="error-message">
+                        {{ Error }}
+                    </div>
+                {% endif %}
+
+                <button type="submit">Log In</button>
+
+                <div class="signup-link">
+                    <span>Don't have an account?</span> <a href="{% url 'signup' %}">Sign Up</a>
+                </div>
+            </div>
+        </form>
+    </div>
+<script>
+   const Password = document.getElementById("Password");
+   const show = document.getElementById("show");
+   const hide = document.getElementById("hide");
+
+    show.addEventListener("click",function(){
+        Password.type="text";
+        show.style.display="none";
+        hide.style.display="block";
+
+     });
+
+    hide.addEventListener("click",function(){
+        Password.type="password";
+        hide.style.display="none";
+        show.style.display="block";
+    });
+
+</script>
+</body>
+</html>

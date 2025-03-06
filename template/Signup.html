@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>SignUp</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a, #3a3a3a);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #66c2ff;
+            font-size: 2.8rem;
+            margin-top: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 6px rgba(0, 123, 255, 0.4);
+        }
+
+        /* Container for input and icon */
+        .input-icon-container {
+            position: relative;
+            width: 100%;
+        }
+
+        .input-icon-container ion-icon {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #ccc;
+            font-size: 18px;
+        }
+
+        /* Style the input fields */
+        .Signup-form input {
+            width: 100%;
+            padding: 16px 14px 16px 40px; /* Extra padding on the left for the icon */
+            margin: 15px 0;
+            border-radius: 12px;
+            border: 1px solid #444;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: white;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .Signup-form input:focus {
+            border-color: #66c2ff;
+            background-color: #444;
+            outline: none;
+        }
+
+        /* Signup Container */
+        .Signup-container {
+            background-color: rgba(255, 255, 255, 0.1); /* Semi-transparent white */
+            padding: 40px;
+            border-radius: 16px;
+            max-width: 500px;
+            box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+            border: 1px solid #ddd;
+            animation: slideUp 0.5s ease-in-out;
+        }
+
+
+        .Signup-form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Label */
+        .form-group label {
+            text-align: left;
+            font-size: 16px;
+            color: #ddd;
+            margin-bottom: 8px;
+        }
+
+        /* Button */
+        .Signup-form button {
+            width: 100%;
+            padding: 18px;
+            background-color: #66c2ff;
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease, transform 0.2s ease;
+        }
+
+        .Signup-form button:hover {
+            background-color: #4da6e0;
+            transform: translateY(-3px);
+        }
+
+        .Signup-form button:active {
+            background-color: #3b8fd5;
+            transform: translateY(0);
+        }
+
+        /* Password Strength Indicator */
+        .Signup-form .form-group p {
+            text-align: left;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 6px;
+            color: #ddd;
+        }
+
+        .Signup-form #StrengthPassword {
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: left;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h1>Create an Account</h1>
+        <div class="Signup-container">
+            <form class="Signup-form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Full Name</label><br>
+                    <div class="input-icon-container">
+                        <ion-icon name="person-circle"></ion-icon>
+                        <input type="text" name="Name" id="name" placeholder="Enter your full name" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email Address</label><br>
+                    <div class="input-icon-container">
+                        <ion-icon name="mail-outline"></ion-icon>
+                        <input type="email" name="Email" id="email" placeholder="Enter your email" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="number">Phone Number</label><br>
+                    <div class="input-icon-container">
+                        <ion-icon name="phone-portrait-sharp"></ion-icon>
+                        <input type="text" name="Number" id="number" placeholder="Enter your phone number" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label><br>
+                    <div class="input-icon-container">
+                        <ion-icon name="person-circle-outline"></ion-icon>
+                        <input type="text" name="Username" id="username" placeholder="Choose a username" required>
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label><br>
+                    <div class="input-icon-container">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" name="Password" id="password" placeholder="Enter a password" required><br>
+                    </div>
+                </div>
+                  <span id="message" style="color:red"></span><br>
+                <div class="form-group">
+                    <label for="password1">Confirm Password</label><br>
+                    <div class="input-icon-container">
+                        <ion-icon name="lock-closed-outline"></ion-icon>
+                        <input type="password" name="Password1" id="password1" placeholder="Re-enter your password" required>
+                    </div>
+                </div>
+
+                {% if error %}
+                    <div class="error-message">
+                        {{ error }}
+                    </div>
+                {% endif %}
+
+                <button type="submit">Sign Up</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+    document.getElementById('password').addEventListener('input', function () {
+        const password = this.value;
+        let PasswordChecker = document.getElementById("message");
+        PasswordChecker.innerHTML = ""; // Clear previous messages
+
+        const LengthCheck = password.length >= 8;
+        const UpperCaseCheck = /[A-Z]/.test(password);
+        const LowerCaseCheck = /[a-z]/.test(password);
+        const NumberCheck = /\d/.test(password);
+        const SpecialCharacterCheck = /[!@#$%^&*()?><|<>:;]/.test(password);
+
+        let messages = [];
+
+        if (!LengthCheck) {
+            messages.push("Password length is less than 8 characters");
+        }
+        if (!UpperCaseCheck) {
+            messages.push("Password requires at least 1 uppercase letter");
+        }
+        if (!LowerCaseCheck) {
+            messages.push("Password requires at least 1 lowercase letter");
+        }
+        if (!NumberCheck) {
+            messages.push("Password requires at least 1 number");
+        }
+        if (!SpecialCharacterCheck) {
+            messages.push("Password requires at least 1 special character");
+        }
+
+        if (messages.length > 0) {
+            PasswordChecker.innerHTML = messages.join("<br>");
+            PasswordChecker.style.color = "red";
+        } else {
+            PasswordChecker.innerHTML = "Password is strong";
+            PasswordChecker.style.color = "green";
+        }
+    });
+    </script>
+
+</body>
+</html>

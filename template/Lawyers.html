@@ -1,0 +1,593 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lawyer List</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <style>
+        /* Custom styles to make the page more attractive */
+       body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Dark Background */
+            color: #f0f0f0; /* Light text for contrast */
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #1d1d1d; /* Dark Navbar */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 2rem;
+        }
+
+        .navbar-nav .nav-item a {
+            color: #ffffff;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-transform: uppercase;
+        }
+
+        .navbar-nav .nav-item a:hover {
+            color: #007bff; /* Highlight color on hover */
+        }
+
+
+       /* Content Area */
+        #main {
+            padding: 30px 20px;
+        }
+
+        /* Align heading and search bar in the same row */
+        .heading {
+            display: flex;
+            justify-content: space-between; /* Space between heading and search bar */
+            align-items: center; /* Vertically center the items */
+            margin-bottom: 20px;
+        }
+
+        .heading h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .Search-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 50%;
+        }
+
+        .Search-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .Search-container button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        .Sort, .Filter {
+            margin: 15px 0;
+        }
+
+        .Sort label, .Filter label {
+            font-size: 1rem;
+            font-weight: bold;
+        }
+
+        .Sort select, .Filter select {
+            width: 60%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        /* Law-Cards  */
+        .card {
+            margin-bottom: 30px;
+            margin-top:30px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%;
+            background-color: #f8f9fa;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card h2 {
+            margin-top:20px;
+            font-size: 1.5rem;
+            text-align: center;
+            color: #007BFF;
+            font-weight: bold;
+        }
+         .card h3 {
+            font-size: 1.5rem;
+            text-align: left;
+            margin-top:20px;
+            color: #121212;
+
+        }
+        .card-body {
+            padding: 20px;
+            flex-grow: 1;
+            color: #495057;
+        }
+
+        .card-body h5 {
+            color: #495057;
+        }
+
+        .card-body p {
+            text-align: justify;
+        }
+
+        .card-footer {
+            background-color: #007bff;
+            padding: 10px;
+            text-align: center;
+            color: white;
+            border-radius: 0 0 10px 10px;
+        }
+
+        .card-footer a {
+            color: white;
+            text-decoration: none;
+            font-size: 1rem;
+            font-weight: 600;
+        }
+
+        .card-footer a:hover {
+            text-decoration: underline;
+        }
+
+        .styled-line {
+
+            height: 5px;
+            background-color: #007bff;
+            width: 100%;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        /* Contact div styles*/
+        .contact {
+            display: none; /* Hide the contact div initially */
+            opacity: 0;
+            transition: opacity 0.3s ease, transform 0.3s ease;
+            padding: 15px;
+            background-color: #f8f9fa; /* Light background */
+            border-radius: 8px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            margin-top: 15px; /* Add some margin from the content */
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+        }
+
+        .contact.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(10px); /* Make it slide in */
+        }
+
+        .contact ion-icon {
+            font-size: 30px;
+            margin: 10px;
+            cursor: pointer;
+            transition: transform 0.3s ease, color 0.3s ease;
+        }
+
+        .contact ion-icon:hover {
+            transform: scale(1.2); /* Make icon enlarge when hovered */
+            color: #007bff; /* Change color on hover */
+        }
+
+        .contact a {
+            color: inherit; /* Ensure links inherit icon color */
+            text-decoration: none;
+        }
+
+        .contact a:hover {
+            text-decoration: underline; /* Underline on hover for better UX */
+        }
+
+
+         /* Pagination */
+        .pagination {
+            display:flex;
+            justify-content:center;
+            margin-top: 20px;
+        }
+
+        /* Style for the links */
+        .pagination .step-links a {
+            color: #00BFFF; /* Light blue color for links */
+            text-decoration: none;
+            padding: 5px 10px;
+            margin: 0 5px;
+            border-radius: 5px;
+
+        }
+
+        /* Hover effect for links */
+        .pagination .step-links a:hover {
+            background-color: #333; /* Darker background on hover */
+            color: white; /* Ensure text is white on hover */
+        }
+
+        /* Current page number styling */
+        .pagination .current {
+            color: yellow; /* Yellow for current page number */
+            font-weight: bold;
+        }
+
+        /* Pagination spacing */
+        .pagination .step-links {
+            display: inline-block;
+            padding: 10px;
+            background-color: #222; /* Dark background for the pagination container */
+            border-radius: 10px;
+        }
+
+        /* Responsive Grid */
+        .row {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-between;
+        }
+
+        .col-sm-3 {
+            margin-bottom: 20px;
+            display: flex;
+            justify-content: center;
+        }
+
+        .col-sm-3 .card {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Button Styles */
+        .btn-info {
+            background-color: #007bff;
+            border: none;
+            font-weight: bold;
+        }
+
+        .btn-info:hover {
+            background-color: #0056b3;
+            transform: scale(1.10);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        /* Lawyer Cards */
+
+        .card {
+            margin-bottom: 20px; /* consistent bottom margin */
+            margin-top: 20px;    /* consistent top margin */
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            height: 100%; /* Ensure cards have the same height */
+            background-color: #f8f9fa;
+            width: 100%; /* Ensure cards take full width in their container */
+            max-width: 300px; /* Set a maximum width for uniform size */
+            border-radius: 10px; /* Make the corners of the cards rounded */
+        }
+
+        .card-body1 {
+            padding: 20px;
+            text-align: center;
+            flex-grow: 1;
+        }
+
+        /* Ensure all cards maintain the same height */
+        .card-img-top {
+            border-radius: 10px 10px 0 0;
+            object-fit: contain; /* Ensure images scale to fill the space without distortion */
+            height: 200px; /* Set a fixed height for the image */
+        }
+
+        /* Layout adjustments for the card content */
+        .card-title {
+            font-size: 1.25rem;
+            color: #007bff;
+            margin-bottom: 10px;
+        }
+
+        .card-text {
+            font-size: 1rem;
+            color: #6c757d;
+            margin-bottom: 20px;
+        }
+
+        /* Button Styling */
+        .button1 {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            font-size: 1rem;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .button1:hover {
+            background-color: #0056b3;
+        }
+
+        .button1 a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .button1 a:hover {
+            text-decoration: none;
+        }
+
+
+        /* Layout adjustments to make the card grid more consistent */
+        .row {
+            display: flex;
+            justify-content: space-evenly;
+            flex-wrap: wrap;
+            gap: 20px; /* Adjust the gap between cards */
+        }
+
+        /* Adjust individual card container */
+        .col-md-3 {
+            display: flex;
+            justify-content: center;
+            flex: 1 1 calc(25% - 20px); /* Ensure 4 cards per row with equal spacing */
+            margin-bottom: 20px;
+        }
+
+
+        /* Styling for the link to look better */
+        .button1 a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .button1 a:hover {
+            text-decoration: none;
+        }
+          /* Footer Styles */
+        .footer {
+            background-color: #1d1d1d;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .footer-links li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+
+        }
+
+        .footer-bottom p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .footer-bottom a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+
+    <!-- Header -->
+    <div class="header">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <h1>LAW for Everyone</h1>
+                </a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/update_user/{{ r.User_Id }}">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/basic_laws">Basic Laws</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register_case">Register Case</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lawyer">Lawyers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-info">
+                            <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+     <!-- Content Section -->
+  <div id="main">
+        <div class="heading">
+            <h1 class="col-md-6 d-flex align-items-center">Lawyers List</h1>
+            <form method="POST" class="col-md-6 d-flex align-items-center">
+                {% csrf_token %}
+                <div class="Search-container d-flex">
+                    <input type="text" name="Search" id="Search" placeholder="Search...." required class="form-control me-2">
+                    <button type="submit" name="Search1" id="Search1" class="btn btn-info">Search</button>
+                </div>
+            </form>
+        </div>
+            <form method="POST" class="d-flex">
+                {% csrf_token %}
+                <div class="Sort col-md-6  align-items-center">
+                    <label for="Sort">Sort:</label>
+                    <select id="Sort" name="Sort" onchange="this.form.submit()" class="form-select ms-2">
+                        <option value="All" selected>All</option>
+                        <option value="Name_asc" {% if Sort == "Name_asc" %}selected{% endif %}>Name(A-Z)</option>
+                        <option value="Name_desc" {% if Sort == 'Name_desc' %}selected{% endif %}>Name(Z-A)</option>
+                    </select>
+                </div>
+                <div class="Filter col-md-6  align-items-center">
+                    <label for="filter" >Filter by Category:</label>
+                    <select id="Filter" name="Filter" onchange="this.form.submit()" class="form-select ms-2">
+                        <option value="All" selected>All</option>
+                        <option value="Criminal" {% if Filter == 'Criminal' %}selected{% endif %}>Criminal</option>
+                        <option value="Cyber" {% if Filter == 'Cyber' %}selected{% endif %}>Cyber</option>
+                        <option value="Environment" {% if Filter == 'Environment' %}selected{% endif %}>Environment</option>
+                        <option value="Family" {% if Filter == 'Family' %}selected{% endif %}>Family</option>
+                        <option value="Civil" {% if Filter == 'Civil' %}selected{% endif %}>Civil</option>
+                    </select>
+                </div>
+            </form>
+        </div>
+    {% csrf_token %}
+    <div class="container">
+        <div class="row">
+            {% for i in page_obj %}
+            <div class="col-md-3">
+                <div class="card">
+                    <img src="{{ i.Image.url }}" alt="{{ i.Name }}" class="card-img-top">
+                    <div class="card-body1">
+                        <h4 class="card-title">{{ i.Name }}</h4>
+                        <h5 style="color:#343a40;">{{ i.Firm }}</h5>
+                        <p class="card-text">{{ i.Category }}</p>
+                        <button type="button" class="button1" onclick="contact(this)">Contact</button><br><br>
+
+                        <div class="contact" id="div1">
+                            <a href="tel:{{ i.Number }}">
+                                <ion-icon name="call" style="color: green;" ></ion-icon>
+                            </a>
+                             <a href="mailto:{{ i.Email }}">
+                                 <ion-icon name="mail-open" style="color: red;" href="mailto:{{ i.Email }}"></ion-icon>
+                             </a>
+
+                        </div>
+                        <button type="button" class="button1">
+                            <a href="/book_lawyer/{{ i.User_Id }}"><b>Book Appointment</b></a>
+                        </button>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <!-- Pagination Controls -->
+     <div class="pagination">
+        <span class="step-links">
+            {% if page_obj.has_previous %}
+                <!-- Add page=1 here to always reset to the first page when navigating -->
+                <a href="?page=1&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">First</a>
+                <a href="?page={{ page_obj.previous_page_number }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Previous</a>
+            {% endif %}
+
+            <span class="current">
+                Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}
+            </span>
+
+            {% if page_obj.has_next %}
+                <!-- Again, add page=1 here for consistency -->
+                <a href="?page={{ page_obj.next_page_number }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Next</a>
+                <a href="?page={{ page_obj.paginator.num_pages }}&Sort={{ Sort }}&Filter={{ Filter }}&Search={{ search }}">Last</a>
+            {% endif %}
+        </span>
+    </div>
+
+ <!-- Footer -->
+    <div class="footer">
+        <h1>LAW for Everyone</h1>
+
+        <ul class="footer-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/update_user/{{ r.User_Id }}">My Profile</a></li>
+            <li><a href="/basic_laws">Basic Laws</a></li>
+            <li><a href="/register_case">Register Case</a></li>
+            <li><a href="/lawyer">Lawyers</a></li>
+            <li><a href="/logout">Log Out</a></li>
+            <li>
+                <button type="button" class="btn btn-info">
+                    <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                </button>
+            </li>
+        </ul>
+        <div class="social-media">
+            <ion-icon name="logo-facebook" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-youtube" style="color:red;"></ion-icon>
+            <ion-icon name="logo-linkedin" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-discord" style="color:purple;"></ion-icon>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Law For Everyone. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+<script>
+ function contact(button) {
+    // Find the contact section within the same card as the clicked button
+    var contactSection = button.closest('.card').querySelector('.contact');
+     contactSection.classList.toggle('show');
+}
+
+
+</script>
+</body>
+</html>

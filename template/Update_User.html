@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Account</title>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+    <style>
+        /* Global Styles */
+        body {
+            font-family: 'Arial', sans-serif;
+            background: linear-gradient(135deg, #1e1e1e, #434343);
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            color: white;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            font-size: 2.5rem;
+            margin-top: 20px;
+            font-weight: 700;
+            text-shadow: 2px 2px 4px rgba(0, 123, 255, 0.3);
+        }
+
+        /* Update Container */
+        .update-container {
+            background-color: rgba(0, 0, 0, 0.7); /* Dark transparent background */
+            padding: 40px;
+            border-radius: 12px;
+            max-width: 500px;
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+            border: 1px solid #444;
+        }
+
+        .update-Form {
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Input Fields */
+        .update-Form input {
+            width: 100%;
+            padding: 14px;
+            margin: 12px 0;
+            border-radius: 8px;
+            border: 1px solid #555;
+            font-size: 16px;
+            box-sizing: border-box;
+            background-color: #333;
+            color: white;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+            position:relative;
+        }
+
+        .update-Form input:focus, .update-Form textarea:focus {
+            border-color: #007bff;
+            background-color: #444;
+            outline: none;
+        }
+
+        /* Avatar Circle */
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            font-size: 30px;
+            display: inline-block;
+            text-align: center;
+            line-height: 80px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        /* Label */
+        .form-group label {
+            font-size: 14px;
+            color: #ddd;
+            margin-bottom: 6px;
+        }
+        /* Password input container */
+         .password-input-validator {
+            position: relative;
+        }
+
+        .toggle-icon {
+            position: absolute;
+            right: 10px;
+            top: 60%;
+            transform: translateY(-50%);
+            cursor: pointer;
+        }
+
+
+
+        /* Button */
+        .update-Form button {
+            width: 100%;
+            padding: 16px;
+            background-color: #007bff;
+            color: white;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .update-Form button:hover {
+            background-color: #0056b3;
+        }
+
+        .update-Form button:active {
+            background-color: #003f7f;
+        }
+
+        /* Error Message */
+        .error-message {
+            color: red;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: left;
+        }
+
+        /* Change Password Link */
+        .update-Form .form-group a {
+            color: #007bff;
+            text-decoration: none;
+            font-size: 14px;
+            margin-top: 10px;
+            text-align: center;
+        }
+
+        .update-Form .form-group a:hover {
+            text-decoration: underline;
+        }
+
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <h1>Update Account</h1>
+        <div class="update-container">
+            <span class="avatar-circle">{{ user.Name | slice:":1" }}</span>
+            <form class="update-Form" method="POST">
+                {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" name="Name" id="name" value="{{ user.Name }}" placeholder="Enter your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Email">Email Address</label>
+                    <input type="email" name="Email" id="Email" value="{{ user.Email }}" placeholder="Enter your email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Number">Phone Number</label>
+                    <input type="text" name="Number" id="Number" value="{{ user.Number }}" placeholder="Enter your phone number" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="Username" id="Username" value="{{ user.Username }}" placeholder="Choose a username" required>
+                </div>
+                <button type="button" onclick="Update_Password()" >Update Password</button><br>
+                <div class="form-group" id="Password" style="display:none">
+                   <div class="password-input-validator">
+                        <label for="NewPassword">New Password</label>
+                        <input type="password" name="NewPassword" id="NewPassword" placeholder="Enter Password" required>
+                        <span class="toggle-icon" id="toggle-icon"><ion-icon name="eye-outline" name="show" id="show"></ion-icon>
+                        <ion-icon name="eye-off-outline" name="hide" id="hide" style="display: none;"></ion-icon></span>
+                   </div>
+
+                    <div id="message"></div>
+
+                    <label for="ConfirmPassword">Confirm New Password</label>
+                    <input type="password" name="ConfirmPassword" id="ConfirmPassword" placeholder="Confirm new password" required>
+
+                </div>
+
+                <button type="submit" class="btn btn-primary">Update</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+       function Update_Password() {
+       var passwordContainer = document.getElementById('Password');
+
+            // Toggle the display of the password fields (show if hidden, hide if shown)
+            if (passwordContainer.style.display === 'none' || passwordContainer.style.display === '') {
+                passwordContainer.style.display = 'block';  // Show password fields
+            } else {
+                passwordContainer.style.display = 'none';   // Hide password fields
+            }
+       }
+
+       // Password validation
+       document.getElementById('NewPassword').addEventListener('input', function () {
+       const password = this.value;
+       const PasswordChecker = document.getElementById("message");
+       PasswordChecker.innerHTML = ""; // Clear previous messages
+
+       const LengthCheck = password.length >= 8;
+       const UpperCaseCheck = /[A-Z]/.test(password);
+       const LowerCaseCheck = /[a-z]/.test(password);
+       const NumberCheck = /\d/.test(password);
+       const SpecialCharacterCheck = /[!@#$%^&*()?><|<>:;]/.test(password);
+
+       let messages = [];
+
+        if (!LengthCheck) {
+            messages.push("Password length is less than 8 characters");
+        }
+        if (!UpperCaseCheck) {
+            messages.push("Password requires at least 1 uppercase letter");
+        }
+        if (!LowerCaseCheck) {
+            messages.push("Password requires at least 1 lowercase letter");
+        }
+        if (!NumberCheck) {
+            messages.push("Password requires at least 1 number");
+        }
+        if (!SpecialCharacterCheck) {
+            messages.push("Password requires at least 1 special character");
+        }
+
+        if (messages.length > 0) {
+            PasswordChecker.innerHTML = messages.join("<br>");
+            PasswordChecker.style.color = "red";
+        } else {
+            PasswordChecker.innerHTML = "Password is strong";
+            PasswordChecker.style.color = "green";
+        }
+        });
+
+        // Password visibility toggle
+       const passwordInput = document.getElementById("NewPassword");
+       const showIcon = document.getElementById("show");
+       const hideIcon = document.getElementById("hide");
+
+       showIcon.addEventListener("click", function() {
+            passwordInput.type = "text";
+            showIcon.style.display = "none";
+            hideIcon.style.display = "block";
+       });
+
+       hideIcon.addEventListener("click", function() {
+            passwordInput.type = "password";
+            hideIcon.style.display = "none";
+            showIcon.style.display = "block";
+       });
+    </script>
+</body>
+</html>

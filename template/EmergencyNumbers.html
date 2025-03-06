@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Emergency Numbers</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+     <style>
+          body {
+            font-family: 'Arial', sans-serif;
+            background-color: #121212; /* Dark Background */
+            color: #f0f0f0; /* Light text for contrast */
+            line-height: 1.6;
+        }
+
+        /* Navbar Styles */
+        .navbar {
+            background-color: #1d1d1d; /* Dark Navbar */
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+        }
+
+        .navbar h1 {
+            color: #ffffff;
+            font-size: 2rem;
+        }
+
+        .navbar-nav .nav-item a {
+            color: #ffffff;
+            font-weight: bold;
+            padding: 10px 20px;
+            text-transform: uppercase;
+        }
+
+        .navbar-nav .nav-item a:hover {
+            color: #007bff; /* Highlight color on hover */
+        }
+
+
+       /* Content Area */
+        #main {
+            padding: 30px 20px;
+        }
+
+        /* Align heading and search bar in the same row */
+        .heading {
+            display: flex;
+            justify-content: space-between; /* Space between heading and search bar */
+            align-items: center; /* Vertically center the items */
+            margin-bottom: 20px;
+        }
+
+        .heading h1 {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0;
+        }
+
+        .Search-container {
+            display: flex;
+            justify-content: flex-end;
+            align-items: center;
+            width: 50%;
+        }
+
+        .Search-container input {
+            width: 80%;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            font-size: 1rem;
+        }
+
+        .Search-container button {
+            margin-left: 10px;
+            padding: 10px 15px;
+            border-radius: 5px;
+            font-size: 1rem;
+        }
+        /* Button styles */
+        .row {
+            margin-top: 30px;
+        }
+        .col-sm-4 {
+            margin-bottom: 20px;
+        }
+        button {
+            width: 100%;
+            padding: 20px;
+            font-size: 1.2em;
+            border-radius: 10px;
+            border: none;
+            transition: all 0.3s ease;
+        }
+        button:hover {
+            background-color: #4CAF50;
+            color: white;
+            transform: scale(1.05);
+        }
+        button:focus {
+            outline: none;
+        }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .col-sm-4 a{
+            display:block;
+            width:100%;
+            padding:20px;
+            font-size:1.2em;
+            border-radius:10px;
+            text-align:center;"
+        }
+          .col-sm-4 a:hover{
+            background-color: #4CAF50;
+            color: white;
+            transform: scale(1.05);
+        }
+           /* Footer Styles */
+        .footer {
+            background-color: #1d1d1d;
+            color: white;
+            padding: 60px 20px;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer h1 {
+            font-size: 2.8rem;
+            font-weight: bold;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 30px;
+        }
+
+        .footer-links li {
+            display: inline-block;
+            margin-right: 20px;
+        }
+
+        .footer-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .footer-bottom p {
+            font-size: 1rem;
+            margin: 5px 0;
+        }
+
+        .footer-bottom a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .footer-bottom a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    {% csrf_token %}
+
+
+    <!-- Header -->
+    <div class="header">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <h1>LAW for Everyone</h1>
+                </a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/update_user/{{ r.User_Id }}">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/basic_laws">Basic Laws</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register_case">Register Case</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lawyer">Lawyers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-info">
+                            <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+         <!-- Content Area -->
+    <div id="main">
+        <div class="heading">
+            <h1 class="col-md-6">Emergency Numbers</h1>
+            <form method="POST" class="col-md-6">
+                {% csrf_token %}
+                <div class="Search-container d-flex">
+                    <input type="text" name="Search" id="Search" placeholder="Search...." required class="form-control me-2">
+                    <button type="submit" name="Search1" id="Search1" class="btn btn-info">Search</button>
+                </div>
+            </form>
+        </div>
+     <!-- Button -->
+    <div class="row">
+        {% for i in Num %}
+            <div class="col-sm-4">
+                <button type="button">{{ i.Title }}</button><br>
+                <a href="tel:{{ i.Number }}" class="btn btn-info" >{{ i.Number }}</a>
+            </div>
+        {% endfor %}
+ <!-- Footer -->
+    <div class="footer">
+        <h1>LAW for Everyone</h1>
+
+        <ul class="footer-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/update_user/{{ r.User_Id }}">My Profile</a></li>
+            <li><a href="/basic_laws">Basic Laws</a></li>
+            <li><a href="/register_case">Register Case</a></li>
+            <li><a href="/lawyer">Lawyers</a></li>
+            <li><a href="/logout">Log Out</a></li>
+            <li>
+                <button type="button" class="btn btn-info">
+                    <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                </button>
+            </li>
+        </ul>
+        <div class="social-media">
+            <ion-icon name="logo-facebook" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-youtube" style="color:red;"></ion-icon>
+            <ion-icon name="logo-linkedin" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-discord" style="color:purple;"></ion-icon>
+        </div>
+
+        <div class="footer-bottom">
+            <p>&copy; 2025 Law For Everyone. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+</body>
+</html>
