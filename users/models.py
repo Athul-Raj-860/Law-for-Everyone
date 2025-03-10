@@ -28,6 +28,7 @@ class User_Details(models.Model):
          db_table = "User_Details"
 
 class Case_Details(models.Model):
+
     Id = models.AutoField(primary_key=True)
     Case = models.ForeignKey(User_Details, on_delete=models.CASCADE)  # No need for default=1
     Complaint_Type = models.CharField(max_length=100)
@@ -35,7 +36,7 @@ class Case_Details(models.Model):
     Complaint_Area = models.CharField(max_length=100)
     Complaint_Date = models.DateField()
     Complaint_Details = models.TextField()
-    Complaint_Image = models.ImageField()
+    Complaint_Image = models.ImageField(upload_to='media/')
 
 
     class Meta:
@@ -116,3 +117,6 @@ class Emergency_Numbers(models.Model):
         db_table='Emergency_Numbers'
 
 
+
+
+# Create your models here.

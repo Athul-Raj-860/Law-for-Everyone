@@ -143,19 +143,19 @@
         <div class="row">
             <div class="col-md-6">
                 <h2>Personal Details</h2>
-                <input type="text" id="Name" name="Name" placeholder="Enter Name" required><br>
-                <input type="text" id="Number" name="Number" placeholder="Enter Number" required><br>
-                <input type="email" id="Email" name="Email" placeholder="Enter Email" required><br>
-                <input type="text" id="City" name="City" placeholder="Enter City" required><br>
-                <input type="text" id="State" name="State" placeholder="Enter State" required><br>
+                <input type="text" id="Name" name="Name" value="{{ i.Name }}" required><br>
+                <input type="text" id="Number" name="Number" placeholder="{{ i.Number }}" required><br>
+                <input type="email" id="Email" name="Email" placeholder="{{ i.Email }}" required><br>
+                <input type="text" id="City" name="City" placeholder="{{ i.City }}" required><br>
+                <input type="text" id="State" name="State" placeholder="{{ i.State}}" required><br>
             </div>
             <div class="col-md-6">
                 <h2>Booking Details</h2>
                 <div class="filter-container">
-                  <input type="text" value="{{ Lawyer.Category }}">
+                  <input type="text" value="{{ i..Category }}">
                 </div>
                  <div class="filter-container">
-                  <input type="text" value="{{ Lawyer.Name }}">
+                  <input type="text" value="{{ i.Name }}">
                 </div>
 
                 <input type="date" id="Appointment_Date" name="Appointment_Date" placeholder="Enter Date" required><br>
