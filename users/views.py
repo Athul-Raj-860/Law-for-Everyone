@@ -139,7 +139,7 @@ def lawyer_list(request):
 
     # Search
     if search:
-        lawyer = lawyer.filter(Law_Title__icontains=search)
+        lawyer = lawyer.filter(Name__icontains=search)
 
 
     # Pagination
@@ -240,7 +240,7 @@ def book_lawyer1(request):
     return render(request, 'BookLawyer1.html', {'LawyersNames': LawyersNames})
 
 def book_lawyer2(request,id):
-    Lawyer = Lawyer_Register.objects.get(User_Id=id)
+    Lawyer = Lawyer_Register.objects.get(Lawyer_Id=id)
     if "User_Id" in request.session and request.method == "POST":
 
         user = request.session["User_Id"]
@@ -284,7 +284,7 @@ def book_lawyer3(request,Book_Id):
     Lawyer = Book_Lawyer.objects.get(Book_Id=Book_Id)
     if "User_Id" in request.session and request.method == "POST":
         user = request.session["User_Id"]
-
+        print(request.POST)
         try:
             register_instance = Register.objects.get(User_Id=user)
         except Register.DoesNotExist:
@@ -316,7 +316,7 @@ def book_lawyer3(request,Book_Id):
             Contact_Time=Contact_Time
         )
 
-        return redirect("payment",Book_Id=booking.Book_Id)
+        return redirect("payment",Lawyer.Book_Id)
 
     return render(request, 'BookLawyer3.html',{'i':Lawyer})
 
@@ -467,7 +467,7 @@ def booking_history(request):
 
     # Apply search filter if provided
     if search:
-        lawyer = lawyer.filter(Law_Title__icontains=search)
+        lawyer = lawyer.filter(Lawyer_Name__icontains=search)
 
     # Apply category filter if not 'All'
     if filter_data != "All":
@@ -475,12 +475,12 @@ def booking_history(request):
 
     # Apply sorting
     if sort == "Name_asc":
-        lawyer = lawyer.order_by("Law_Title")
+        lawyer = lawyer.order_by("Lawyer_Name")
     elif sort == "Name_desc":
-        lawyer = lawyer.order_by("-Law_Title")
+        lawyer = lawyer.order_by("-Lawyer_Name")
 
     # Paginate the results (6 items per page)
-    paginator = Paginator(lawyer, 6)
+    paginator = Paginator(lawyer, 8)
     page_obj = paginator.get_page(page_number)
 
     # Render the template with context
@@ -492,11 +492,10 @@ def booking_history(request):
         "r": r,
     })
 
+
 def case_history(request):
-
     # Handle POST requests (from search, filter, or sort forms)
-    if "User_Id"  in request.session and request.method == "POST":
-
+    if "User_Id" in request.session and request.method == "POST":
         # Get filter, sort, and search parameters from POST data
         filter_data = request.POST.get("Filter", "All")
         sort = request.POST.get("Sort", "All")
@@ -515,11 +514,18 @@ def case_history(request):
         return redirect(f"{request.path}?{query_string}")
 
     # Handle GET requests
-    # Retrieve all Basic_Laws objects
     User = request.session["User_Id"]
     r = Register.objects.get(User_Id=User)
-    user = User_Details.objects.get(User=r.User_Id)
-    Cases = Case_Details.objects.filter(Case=user.Case_Id)
+
+    # Use filter() to get all User_Details associated with the user
+    user_details_list = User_Details.objects.filter(User=r.User_Id)
+
+    # Initialize an empty queryset for case_list
+    case_list = Case_Details.objects.none()
+
+    # Iterate over the user details list and accumulate related case details
+    for user_details in user_details_list:
+        case_list |= Case_Details.objects.filter(Case=user_details.Case_Id)
 
     # Get filter, sort, search, and page parameters from GET data
     filter_data = request.GET.get("Filter", "All")
@@ -529,31 +535,33 @@ def case_history(request):
 
     # Apply search filter if provided
     if search:
-        Cases = Cases.filter(Law_Title__icontains=search)
+        case_list = case_list.filter(Complaint_Type__icontains=search)
 
     # Apply category filter if not 'All'
     if filter_data != "All":
-        Cases = Cases.filter(Law_Category=filter_data)
+        case_list = case_list.filter(Complaint_Type=filter_data)
 
     # Apply sorting
     if sort == "Name_asc":
-        Cases = Cases.order_by("Law_Title")
+        case_list = case_list.order_by("Complaint_Type")
     elif sort == "Name_desc":
-        Cases = Cases.order_by("-Law_Title")
+        case_list = case_list.order_by("-Complaint_Type")
 
-    # Paginate the results (6 items per page)
-    paginator = Paginator(Cases, 6)
+    # Paginate the results (8 items per page)
+    paginator = Paginator(case_list, 8)
     page_obj = paginator.get_page(page_number)
-
 
     # Render the template with context
     return render(request, "RegisteredCases.html", {
-        "page_obj": page_obj,
+        "case_list": page_obj,  # Pass the list of case pages to the template
         "Filter": filter_data,
         "Sort": sort,
         "Search": search,
-        "r":r,
+        "r": r,
+        "user_details_list": user_details_list,  # Pass the list of user details to the template
     })
+
+
 
 
 # Create your views here.

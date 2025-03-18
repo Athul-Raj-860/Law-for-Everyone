@@ -165,7 +165,7 @@
                 </div>
                 <!-- Modal Footer -->
                 <div class="modal-footer">
-                    <button class="btn" onclick="window.print()">Print Receipt</button>
+                    <button class="btn" onclick="printModal()">Print Receipt</button>
                     <button type="button" class="btn btn-danger" onclick="window.location.href='/home'">Close</button>
                 </div>
             </div>
@@ -191,6 +191,24 @@
                 CvvChecker.style.display = "none";
             }
         });
+        function printModal() {
+        // Get the modal content HTML
+        var modalContent = document.querySelector('.modal-content').outerHTML;
+
+        // Open a new window for printing
+        var printWindow = window.open('', '', 'height=600,width=800');
+
+        // Write the HTML structure to the new window
+        printWindow.document.write('<html><head><title>Print Receipt</title>');
+        printWindow.document.write('<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }</style>');
+        printWindow.document.write('</head><body>');
+        printWindow.document.write(modalContent);
+        printWindow.document.write('</body></html>');
+
+        // Close the document stream and trigger print
+        printWindow.document.close();
+        printWindow.print();
+    }
     </script>
 </body>
 </html>

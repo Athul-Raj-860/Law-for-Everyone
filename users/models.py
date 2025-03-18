@@ -22,6 +22,7 @@ class User_Details(models.Model):
      Email = models.EmailField()
      Address = models.TextField()
      City = models.CharField(max_length=100)
+     District = models.CharField(max_length=100,default=1)
      State = models.CharField(max_length=100)
 
      class Meta:
@@ -40,7 +41,7 @@ class Case_Details(models.Model):
 
 
     class Meta:
-         db_table="CaseDetails"
+         db_table="Case_Details"
 
 class Lawyer_Register(models.Model):
 
@@ -81,6 +82,7 @@ class Book_Lawyer(models.Model):
     Number = models.CharField(max_length=255)
     Email = models.EmailField()
     City = models.CharField(max_length=100)
+    District =models.CharField(max_length=100,default=1)
     State = models.CharField(max_length=100)
 
     Lawyer_Name = models.CharField(max_length=255)

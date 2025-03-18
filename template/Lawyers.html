@@ -9,53 +9,86 @@
     <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
     <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
     <style>
-        /* Custom styles to make the page more attractive */
-       body {
-            font-family: 'Arial', sans-serif;
-            background-color: #121212; /* Dark Background */
-            color: #f0f0f0; /* Light text for contrast */
+           /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
             line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 500;
         }
 
         /* Navbar Styles */
         .navbar {
-            background-color: #1d1d1d; /* Dark Navbar */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+            background-color: #1d1d1d;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .navbar h1 {
-            color: #ffffff;
-            font-size: 2rem;
+        .navbar-brand h1 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #fff;
+            margin: 0;
         }
 
         .navbar-nav .nav-item a {
-            color: #ffffff;
-            font-weight: bold;
-            padding: 10px 20px;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
             text-transform: uppercase;
+            transition: color 0.3s;
         }
 
         .navbar-nav .nav-item a:hover {
-            color: #007bff; /* Highlight color on hover */
+            color: #007bff;
         }
 
+        .btn-info {
+            background-color: #007bff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
 
-       /* Content Area */
+        .btn-info:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-info a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+        /* Main Content Area */
         #main {
-            padding: 30px 20px;
+            background: linear-gradient(135deg, #1d1d1d 0%, #2b2b2b 100%);
+            padding: 2rem;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            margin: 2rem 0;
         }
 
-        /* Align heading and search bar in the same row */
         .heading {
             display: flex;
-            justify-content: space-between; /* Space between heading and search bar */
-            align-items: center; /* Vertically center the items */
-            margin-bottom: 20px;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 2rem;
         }
 
         .heading h1 {
-            font-size: 2rem;
-            font-weight: bold;
+            font-size: 2.5rem;
+            font-weight: 700;
+            color: #fff;
+            text-transform: uppercase;
+            letter-spacing: 1px;
             margin: 0;
         }
 
@@ -68,269 +101,113 @@
 
         .Search-container input {
             width: 80%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #333;
+            color: #f0f0f0;
+            border: 1px solid #444;
             font-size: 1rem;
         }
 
         .Search-container button {
-            margin-left: 10px;
-            padding: 10px 15px;
-            border-radius: 5px;
-            font-size: 1rem;
+            margin-left: 1rem;
+            padding: 0.5rem 1.5rem;
+            border-radius: 25px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            transition: background-color 0.3s;
         }
+
+        .Search-container button:hover {
+            background-color: #0056b3;
+        }
+
         .Sort, .Filter {
-            margin: 15px 0;
+            margin: 1rem 0;
+            display: flex;
+            align-items: center;
         }
 
         .Sort label, .Filter label {
-            font-size: 1rem;
-            font-weight: bold;
+            color: #fff;
+            font-weight: 500;
+            margin-right: 0.5rem;
         }
 
         .Sort select, .Filter select {
             width: 60%;
-            padding: 10px;
-            border-radius: 5px;
-            border: 1px solid #ccc;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+            background-color: #333;
+            color: #f0f0f0;
+            border: 1px solid #444;
+            font-size: 1rem;
         }
 
-        /* Law-Cards  */
+        /* Lawyer Cards */
         .card {
-            margin-bottom: 30px;
-            margin-top:30px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%;
-            background-color: #f8f9fa;
+            background-color: #2b2b2b;
+            color: #f0f0f0;
+            min-height: 400px;
+            max-width: 300px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            transition: transform 0.3s, box-shadow 0.3s;
+            animation: fadeIn 0.5s ease-in-out;
+            margin: 0 auto;
         }
 
         .card:hover {
             transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.4);
         }
 
-        .card h2 {
-            margin-top:20px;
-            font-size: 1.5rem;
-            text-align: center;
-            color: #007BFF;
-            font-weight: bold;
-        }
-         .card h3 {
-            font-size: 1.5rem;
-            text-align: left;
-            margin-top:20px;
-            color: #121212;
-
-        }
-        .card-body {
-            padding: 20px;
-            flex-grow: 1;
-            color: #495057;
-        }
-
-        .card-body h5 {
-            color: #495057;
-        }
-
-        .card-body p {
-            text-align: justify;
-        }
-
-        .card-footer {
-            background-color: #007bff;
-            padding: 10px;
-            text-align: center;
-            color: white;
-            border-radius: 0 0 10px 10px;
-        }
-
-        .card-footer a {
-            color: white;
-            text-decoration: none;
-            font-size: 1rem;
-            font-weight: 600;
-        }
-
-        .card-footer a:hover {
-            text-decoration: underline;
-        }
-
-        .styled-line {
-
-            height: 5px;
-            background-color: #007bff;
-            width: 100%;
-            margin-left: auto;
-            margin-right: auto;
-        }
-        /* Contact div styles*/
-        .contact {
-            display: none; /* Hide the contact div initially */
-            opacity: 0;
-            transition: opacity 0.3s ease, transform 0.3s ease;
-            padding: 15px;
-            background-color: #f8f9fa; /* Light background */
-            border-radius: 8px;
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            margin-top: 15px; /* Add some margin from the content */
-            align-items: center;
-            justify-content: center;
-            text-align: center;
-        }
-
-        .contact.show {
-            display: flex;
-            opacity: 1;
-            transform: translateY(10px); /* Make it slide in */
-        }
-
-        .contact ion-icon {
-            font-size: 30px;
-            margin: 10px;
-            cursor: pointer;
-            transition: transform 0.3s ease, color 0.3s ease;
-        }
-
-        .contact ion-icon:hover {
-            transform: scale(1.2); /* Make icon enlarge when hovered */
-            color: #007bff; /* Change color on hover */
-        }
-
-        .contact a {
-            color: inherit; /* Ensure links inherit icon color */
-            text-decoration: none;
-        }
-
-        .contact a:hover {
-            text-decoration: underline; /* Underline on hover for better UX */
-        }
-
-
-         /* Pagination */
-        .pagination {
-            display:flex;
-            justify-content:center;
-            margin-top: 20px;
-        }
-
-        /* Style for the links */
-        .pagination .step-links a {
-            color: #00BFFF; /* Light blue color for links */
-            text-decoration: none;
-            padding: 5px 10px;
-            margin: 0 5px;
-            border-radius: 5px;
-
-        }
-
-        /* Hover effect for links */
-        .pagination .step-links a:hover {
-            background-color: #333; /* Darker background on hover */
-            color: white; /* Ensure text is white on hover */
-        }
-
-        /* Current page number styling */
-        .pagination .current {
-            color: yellow; /* Yellow for current page number */
-            font-weight: bold;
-        }
-
-        /* Pagination spacing */
-        .pagination .step-links {
-            display: inline-block;
-            padding: 10px;
-            background-color: #222; /* Dark background for the pagination container */
-            border-radius: 10px;
-        }
-
-        /* Responsive Grid */
-        .row {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: space-between;
-        }
-
-        .col-sm-3 {
-            margin-bottom: 20px;
-            display: flex;
-            justify-content: center;
-        }
-
-        .col-sm-3 .card {
-            width: 100%;
-            height: 100%;
-        }
-
-        /* Button Styles */
-        .btn-info {
-            background-color: #007bff;
-            border: none;
-            font-weight: bold;
-        }
-
-        .btn-info:hover {
-            background-color: #0056b3;
-            transform: scale(1.10);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
-        }
-
-        /* Lawyer Cards */
-
-        .card {
-            margin-bottom: 20px; /* consistent bottom margin */
-            margin-top: 20px;    /* consistent top margin */
-            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-            display: flex;
-            flex-direction: column;
-            height: 100%; /* Ensure cards have the same height */
-            background-color: #f8f9fa;
-            width: 100%; /* Ensure cards take full width in their container */
-            max-width: 300px; /* Set a maximum width for uniform size */
-            border-radius: 10px; /* Make the corners of the cards rounded */
+        .card-img-top {
+            height: 200px;
+            object-fit: contain;
+            border-radius: 10px 10px 0 0;
         }
 
         .card-body1 {
-            padding: 20px;
-            text-align: center;
+            padding: 1.5rem;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
             flex-grow: 1;
         }
 
-        /* Ensure all cards maintain the same height */
-        .card-img-top {
-            border-radius: 10px 10px 0 0;
-            object-fit: contain; /* Ensure images scale to fill the space without distortion */
-            height: 200px; /* Set a fixed height for the image */
+        .card-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            color: #fff;
+            margin-bottom: 0.75rem;
         }
 
-        /* Layout adjustments for the card content */
-        .card-title {
-            font-size: 1.25rem;
-            color: #007bff;
-            margin-bottom: 10px;
+        .card h5 {
+            font-size: 1rem;
+            color: #ccc;
+            margin-bottom: 0.75rem;
         }
 
         .card-text {
             font-size: 1rem;
-            color: #6c757d;
-            margin-bottom: 20px;
+            color: #ccc;
+            margin-bottom: 1rem;
         }
 
-        /* Button Styling */
         .button1 {
             background-color: #007bff;
-            color: white;
+            color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
             font-size: 1rem;
             cursor: pointer;
-            transition: background-color 0.3s ease;
+            transition: background-color 0.3s;
+            margin-bottom: 1rem;
         }
 
         .button1:hover {
@@ -338,88 +215,165 @@
         }
 
         .button1 a {
-            color: white;
+            color: #fff;
             text-decoration: none;
         }
 
-        .button1 a:hover {
+        .contact {
+            display: none;
+            opacity: 0;
+            transition: opacity 0.3s, transform 0.3s;
+            margin: 1rem 0;
+        }
+
+        .contact.show {
+            display: flex;
+            opacity: 1;
+            transform: translateY(0);
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .contact ion-icon {
+            font-size: 2rem;
+            color: #007bff;
+            transition: color 0.3s;
+        }
+
+        .contact ion-icon:hover {
+            color: #0056b3;
+        }
+
+        .contact a {
+            color: inherit;
             text-decoration: none;
         }
 
-
-        /* Layout adjustments to make the card grid more consistent */
+        /* Card Grid */
         .row {
             display: flex;
-            justify-content: space-evenly;
             flex-wrap: wrap;
-            gap: 20px; /* Adjust the gap between cards */
+            justify-content: space-around;
+            gap: 20px;
         }
 
-        /* Adjust individual card container */
         .col-md-3 {
             display: flex;
             justify-content: center;
-            flex: 1 1 calc(25% - 20px); /* Ensure 4 cards per row with equal spacing */
-            margin-bottom: 20px;
+            flex: 1 1 calc(25% - 20px);
+            margin-bottom: 2rem;
         }
 
+        /* Pagination Styles */
+        .pagination {
+            display: flex;
+            justify-content: center;
+            margin-top: 30px;
+        }
 
-        /* Styling for the link to look better */
-        .button1 a {
-            color: white;
+        .pagination .step-links a {
+            color: #3498db;
             text-decoration: none;
+            padding: 10px 20px;
+            margin: 0 5px;
+            border-radius: 5px;
+            background-color: #1F2A3D;
         }
 
-        .button1 a:hover {
-            text-decoration: none;
+        .pagination .step-links a:hover {
+            background-color: #3498db;
+            color: #fff;
         }
-          /* Footer Styles */
+
+        .pagination .current {
+            color: #f39c12;
+            font-weight: bold;
+        }
+
+        .pagination .step-links {
+            display: inline-block;
+            padding: 10px;
+            background-color: #222;
+            border-radius: 10px;
+        }
+
+        /* Footer */
         .footer {
             background-color: #1d1d1d;
-            color: white;
-            padding: 60px 20px;
+            color: #f0f0f0;
+            padding: 3rem 2rem;
             text-align: center;
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .footer h1 {
             font-size: 2.8rem;
-            font-weight: bold;
+            font-weight: 700;
             color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .footer-links {
             list-style-type: none;
             padding: 0;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
         }
 
         .footer-links li {
             display: inline-block;
-            margin-right: 20px;
+            margin: 0 1rem;
         }
 
         .footer-links a {
-            color: white;
+            color: #f0f0f0;
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 500;
+            transition: color 0.3s;
         }
 
         .footer-links a:hover {
             color: #007bff;
+            text-decoration: underline;
+        }
 
+        .social-media ion-icon {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-media ion-icon:hover {
+            color: #007bff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 1rem;
         }
 
         .footer-bottom p {
             font-size: 1rem;
-            margin: 5px 0;
+            margin: 0.5rem 0;
         }
 
         .footer-bottom a {
             color: #007bff;
             text-decoration: none;
+        }
+
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
         }
 
 
@@ -507,9 +461,9 @@
                     <img src="{{ i.Image.url }}" alt="{{ i.Name }}" class="card-img-top">
                     <div class="card-body1">
                         <h4 class="card-title">{{ i.Name }}</h4>
-                        <h5 style="color:#343a40;">{{ i.Firm }}</h5>
+                        <h5 >{{ i.Firm }}</h5>
                         <p class="card-text">{{ i.Category }}</p>
-                        <button type="button" class="button1" onclick="contact(this)">Contact</button><br><br>
+                        <button type="button" class="button1" onclick="contact(this)">Contact</button>
 
                         <div class="contact" id="div1">
                             <a href="tel:{{ i.Number }}">
@@ -521,7 +475,7 @@
 
                         </div>
                         <button type="button" class="button1">
-                            <a href="/book_lawyer/{{ i.User_Id }}"><b>Book Appointment</b></a>
+                            <a href="/book_lawyer/{{ i.Lawyer_Id }}"><b>Book Appointment</b></a>
                         </button>
                     </div>
                 </div>

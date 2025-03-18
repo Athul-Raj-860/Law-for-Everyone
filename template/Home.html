@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -12,52 +11,68 @@
 
     <!-- Custom Styles -->
     <style>
-      body {
-            font-family: 'Arial', sans-serif;
-            background-color: #121212; /* Dark Background */
-            color: #f0f0f0; /* Light text for contrast */
+        /* General Styles */
+        body {
+            font-family: 'Roboto', sans-serif;
+            background-color: #121212;
+            color: #f0f0f0;
             line-height: 1.6;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-weight: 500;
+        }
+
+        /* Focus Styles for Accessibility */
+        a:focus, button:focus {
+            outline: 2px solid #007bff;
+            outline-offset: 2px;
         }
 
         /* Navbar Styles */
         .navbar {
-            background-color: #1d1d1d; /* Dark Navbar */
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5); /* Shadow for depth */
+            background-color: #1d1d1d;
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
-        .navbar h1 {
-            color: #ffffff;
-            font-size: 2rem;
+        .navbar-brand h1 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #fff;
+            margin: 0;
         }
 
         .navbar-nav .nav-item a {
-            color: #ffffff;
-            text-decoration:none;
-            font-weight: bold;
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
             text-transform: uppercase;
+            transition: color 0.3s;
         }
 
         .navbar-nav .nav-item a:hover {
-            color: #007bff; /* Highlight color on hover */
-
+            color: #007bff;
         }
-           /* Button Styles */
+
         .btn-info {
             background-color: #007bff;
             border: none;
-            font-weight: bold;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
         }
 
         .btn-info:hover {
             background-color: #0056b3;
-            transform: scale(1.10);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
-        .social-media{
-          font-size:30px;
-        }
-        .social-media ion-icon{
-          gap:10px;
+
+        .btn-info a {
+            color: #fff;
+            text-decoration: none;
         }
 
         /* Hero Section */
@@ -105,7 +120,7 @@
         }
 
         .quote {
-            background-color: #1e1e1e; /* Dark background for quotes */
+            background-color: #1e1e1e;
             border-left: 5px solid #007bff;
             padding: 30px;
             font-style: italic;
@@ -118,7 +133,7 @@
 
         .quote p {
             margin: 0;
-            color: #bbb; /* Light text */
+            color: #bbb;
         }
 
         .quote:hover {
@@ -136,8 +151,9 @@
 
         .carousel-item img {
             width: 100%;
+            height: auto;
             max-height: 600px;
-            object-fit: cover; /* Ensure images maintain aspect ratio */
+            object-fit: cover;
         }
 
         /* Content Section */
@@ -147,19 +163,23 @@
 
         /* Card Styling */
         .card {
-            border: 1px solid #333; /* Darker card border */
+            border: 1px solid #333;
             border-radius: 8px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
             overflow: hidden;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
-            background-color: #1e1e1e; /* Dark background for cards */
-
+            background-color: #1e1e1e;
         }
 
         .card-img-top {
             max-height: 200px;
             object-fit: cover;
             width: 100%;
+        }
+
+        .card-body {
+            padding: 15px;
+            text-align: center;
         }
 
         .card-title {
@@ -169,54 +189,70 @@
             margin: 10px 0;
         }
 
-
         .card:hover {
-            transform: scale(1.10);
+            transform: scale(1.05);
             box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
         }
 
-        /* Footer Styles */
+        /* Footer */
         .footer {
             background-color: #1d1d1d;
-            color: white;
-            padding: 60px 20px;
+            color: #f0f0f0;
+            padding: 3rem 2rem;
             text-align: center;
             box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .footer h1 {
             font-size: 2.8rem;
-            font-weight: bold;
+            font-weight: 700;
             color: #007bff;
-            margin-bottom: 20px;
+            margin-bottom: 1.5rem;
         }
 
         .footer-links {
             list-style-type: none;
             padding: 0;
-            margin-bottom: 30px;
+            margin-bottom: 2rem;
         }
 
         .footer-links li {
             display: inline-block;
-            margin-right: 20px;
+            margin: 0 1rem;
         }
 
         .footer-links a {
-            color: white;
+            color: #f0f0f0;
             text-decoration: none;
             font-size: 1.2rem;
             font-weight: 500;
+            transition: color 0.3s;
         }
 
         .footer-links a:hover {
             color: #007bff;
+            text-decoration: underline;
+        }
 
+        .social-media ion-icon {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-media ion-icon:hover {
+            color: #007bff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 1rem;
         }
 
         .footer-bottom p {
             font-size: 1rem;
-            margin: 5px 0;
+            margin: 0.5rem 0;
         }
 
         .footer-bottom a {
@@ -224,10 +260,32 @@
             text-decoration: none;
         }
 
+        /* Animation */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
 
+        /* Media Query for Smaller Screens */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 400px;
+            }
 
+            .heading h2 {
+                font-size: 2rem;
+            }
 
-
+            .heading p {
+                font-size: 1.2rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -236,7 +294,7 @@
 
     <!-- Header -->
     <div class="header">
-        <nav class="navbar navbar-expand-sm navbar-light bg-dark">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark" role="navigation">
             <div class="container-fluid">
                 <a class="navbar-brand" href="#">
                     <h1>LAW for Everyone</h1>
@@ -300,7 +358,7 @@
             <div class="carousel-item">
                 <img src="{% static 'images/Carousel3.jpg' %}" alt="Constitution" class="img-fluid my-4">
             </div>
-      </div>
+        </div>
     </div>
 
     <!-- Content Section -->
@@ -308,68 +366,67 @@
         <div class="row">
             <div class="col-sm-12 col-md-3 mb-4">
                 <a href="/basic_laws">
-                   <div class="card">
-                     <img src="{% static 'images/Law1.jpeg'%}" alt="Basic Laws" class="card-img-top">
-                       <div class="card-title">
-                           <h3>Basic Laws</h3>
-                       </div>
-                   </div>
+                    <div class="card">
+                        <img src="{% static 'images/Law1.jpeg' %}" alt="Basic Laws" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Basic Laws</h3>
+                        </div>
+                    </div>
                 </a>
             </div>
             <div class="col-sm-12 col-md-3 mb-4">
-                  <a href="/lawyer">
+                <a href="/lawyer">
                     <div class="card">
-                     <img src="{% static 'images/lawyers.jpeg'%}" alt="Lawyers" class="card-img-top">
-                       <div class="card-title">
-                           <h3>Lawyers</h3>
-                       </div>
-                   </div>
-                  </a>
+                        <img src="{% static 'images/lawyers.jpeg' %}" alt="Lawyers" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Lawyers</h3>
+                        </div>
+                    </div>
+                </a>
             </div>
             <div class="col-sm-12 col-md-3 mb-4">
-                  <a href="/register_case">
-                     <div class="card">
-                     <img src="{% static 'images/Register Case1.jpeg'%}" alt="Register Case" class="card-img-top">
-                       <div class="card-title">
-                           <h3>Register Case</h3>
-                       </div>
-                   </div>
-                  </a>
+                <a href="/register_case">
+                    <div class="card">
+                        <img src="{% static 'images/Register Case1.jpeg' %}" alt="Register Case" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Register Case</h3>
+                        </div>
+                    </div>
+                </a>
             </div>
             <div class="col-sm-12 col-md-3 mb-4">
-                  <a href="/book_lawyer">
-                     <div class="card">
-                     <img src="{% static 'images/Appointment.jpeg'%}" alt="Book Lawyer" class="card-img-top">
-                       <div class="card-title">
-                           <h3>Book Lawyer</h3>
-                       </div>
-                   </div>
-                  </a>
+                <a href="/book_lawyer">
+                    <div class="card">
+                        <img src="{% static 'images/Appointment.jpeg' %}" alt="Book Lawyer" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Book Lawyer</h3>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
-       <div class="container content-section text-center">
+    <div class="container content-section text-center">
         <div class="row d-flex justify-content-center">
             <div class="col-sm-12 col-md-3 mb-4">
                 <a href="/case_history">
-                   <div class="card">
-                     <img src="{% static 'images/registered case.jpeg'%}" alt="Basic Laws" class="card-img-top">
-                       <div class="card-title">
-                           <h3>Registered Cases</h3>
-                       </div>
-                   </div>
+                    <div class="card">
+                        <img src="{% static 'images/registered case.jpeg' %}" alt="Registered Cases" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Registered Cases</h3>
+                        </div>
+                    </div>
                 </a>
             </div>
-
             <div class="col-sm-12 col-md-3 mb-4">
-                  <a href="/booking_history">
-                     <div class="card">
-                     <img src="{% static 'images/book lawyer.jpg'%}" alt="Book Lawyer" class="card-img-top">
-                       <div class="card-title">
-                           <h3>Booked Lawyer</h3>
-                       </div>
-                   </div>
-                  </a>
+                <a href="/booking_history">
+                    <div class="card">
+                        <img src="{% static 'images/book lawyer.jpg' %}" alt="Booked Lawyer" class="card-img-top">
+                        <div class="card-body">
+                            <h3 class="card-title">Booked Lawyer</h3>
+                        </div>
+                    </div>
+                </a>
             </div>
         </div>
     </div>
@@ -377,7 +434,6 @@
     <!-- Footer -->
     <div class="footer">
         <h1>LAW for Everyone</h1>
-
         <ul class="footer-links">
             <li><a href="/home">Home</a></li>
             <li><a href="/update_user/{{ r.User_Id }}">My Profile</a></li>
@@ -387,7 +443,7 @@
             <li><a href="/logout">Log Out</a></li>
             <li>
                 <button type="button" class="btn btn-info">
-                    <a href="/emergency_numbers" >Emergency Numbers</a>
+                    <a href="/emergency_numbers">Emergency Numbers</a>
                 </button>
             </li>
         </ul>
@@ -398,10 +454,9 @@
             <ion-icon name="logo-discord" style="color:purple;"></ion-icon>
         </div>
         <div class="footer-bottom">
-            <p>&copy; 2025 Law For Everyone. All Rights Reserved.</p>
+            <p>© 2025 Law For Everyone. All Rights Reserved.</p>
             <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
         </div>
     </div>
-
 </body>
 </html>

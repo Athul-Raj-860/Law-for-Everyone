@@ -9,9 +9,13 @@
 
     <style>
         /* Global Styles */
+        {% load static %}
         body {
             font-family: 'Arial', sans-serif;
-            background: linear-gradient(135deg, #1e1e1e, #434343);
+            background-image: url("{% static 'images/updateuser.jpg' %}");
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
             margin: 0;
             padding: 0;
             display: flex;
@@ -24,7 +28,6 @@
             text-align: center;
             color: #007bff;
             font-size: 2.5rem;
-            margin-top: 20px;
             font-weight: 700;
             text-shadow: 2px 2px 4px rgba(0, 123, 255, 0.3);
         }
@@ -87,8 +90,9 @@
             color: #ddd;
             margin-bottom: 6px;
         }
+
         /* Password input container */
-         .password-input-validator {
+        .password-input-validator {
             position: relative;
         }
 
@@ -99,8 +103,6 @@
             transform: translateY(-50%);
             cursor: pointer;
         }
-
-
 
         /* Button */
         .update-Form button {
@@ -144,15 +146,14 @@
         .update-Form .form-group a:hover {
             text-decoration: underline;
         }
-
-
     </style>
 </head>
 <body>
 
     <div>
-        <h1>Update Account</h1>
+
         <div class="update-container">
+            <h1>Update Account</h1>
             <span class="avatar-circle">{{ user.Name | slice:":1" }}</span>
             <form class="update-Form" method="POST">
                 {% csrf_token %}
@@ -175,7 +176,7 @@
                     <label for="username">Username</label>
                     <input type="text" name="Username" id="Username" value="{{ user.Username }}" placeholder="Choose a username" required>
                 </div>
-                <button type="button" onclick="Update_Password()" >Update Password</button><br>
+                <button type="button" onclick="Update_Password()">Update Password</button><br>
                 <div class="form-group" id="Password" style="display:none">
                    <div class="password-input-validator">
                         <label for="NewPassword">New Password</label>
@@ -198,71 +199,67 @@
 
     <script>
        function Update_Password() {
-       var passwordContainer = document.getElementById('Password');
+            var passwordContainer = document.getElementById('Password');
 
-            // Toggle the display of the password fields (show if hidden, hide if shown)
-            if (passwordContainer.style.display === 'none' || passwordContainer.style.display === '') {
-                passwordContainer.style.display = 'block';  // Show password fields
-            } else {
-                passwordContainer.style.display = 'none';   // Hide password fields
-            }
+            // Only toggle the visibility of the password fields, without affecting the layout
+            passwordContainer.style.display = passwordContainer.style.display === 'none' || passwordContainer.style.display === '' ? 'block' : 'none';
        }
 
        // Password validation
        document.getElementById('NewPassword').addEventListener('input', function () {
-       const password = this.value;
-       const PasswordChecker = document.getElementById("message");
-       PasswordChecker.innerHTML = ""; // Clear previous messages
+           const password = this.value;
+           const PasswordChecker = document.getElementById("message");
+           PasswordChecker.innerHTML = ""; // Clear previous messages
 
-       const LengthCheck = password.length >= 8;
-       const UpperCaseCheck = /[A-Z]/.test(password);
-       const LowerCaseCheck = /[a-z]/.test(password);
-       const NumberCheck = /\d/.test(password);
-       const SpecialCharacterCheck = /[!@#$%^&*()?><|<>:;]/.test(password);
+           const LengthCheck = password.length >= 8;
+           const UpperCaseCheck = /[A-Z]/.test(password);
+           const LowerCaseCheck = /[a-z]/.test(password);
+           const NumberCheck = /\d/.test(password);
+           const SpecialCharacterCheck = /[!@#$%^&*()?><|<>:;]/.test(password);
 
-       let messages = [];
+           let messages = [];
 
-        if (!LengthCheck) {
-            messages.push("Password length is less than 8 characters");
-        }
-        if (!UpperCaseCheck) {
-            messages.push("Password requires at least 1 uppercase letter");
-        }
-        if (!LowerCaseCheck) {
-            messages.push("Password requires at least 1 lowercase letter");
-        }
-        if (!NumberCheck) {
-            messages.push("Password requires at least 1 number");
-        }
-        if (!SpecialCharacterCheck) {
-            messages.push("Password requires at least 1 special character");
-        }
+            if (!LengthCheck) {
+                messages.push("Password length is less than 8 characters");
+            }
+            if (!UpperCaseCheck) {
+                messages.push("Password requires at least 1 uppercase letter");
+            }
+            if (!LowerCaseCheck) {
+                messages.push("Password requires at least 1 lowercase letter");
+            }
+            if (!NumberCheck) {
+                messages.push("Password requires at least 1 number");
+            }
+            if (!SpecialCharacterCheck) {
+                messages.push("Password requires at least 1 special character");
+            }
 
-        if (messages.length > 0) {
-            PasswordChecker.innerHTML = messages.join("<br>");
-            PasswordChecker.style.color = "red";
-        } else {
-            PasswordChecker.innerHTML = "Password is strong";
-            PasswordChecker.style.color = "green";
-        }
+            if (messages.length > 0) {
+                PasswordChecker.innerHTML = messages.join("<br>");
+                PasswordChecker.style.color = "red";
+            } else {
+                PasswordChecker.innerHTML = "Password is strong";
+                PasswordChecker.style.color = "green";
+            }
         });
 
         // Password visibility toggle
-       const passwordInput = document.getElementById("NewPassword");
-       const showIcon = document.getElementById("show");
-       const hideIcon = document.getElementById("hide");
+        const passwordInput = document.getElementById("NewPassword");
+        const showIcon = document.getElementById("show");
+        const hideIcon = document.getElementById("hide");
 
-       showIcon.addEventListener("click", function() {
+        showIcon.addEventListener("click", function() {
             passwordInput.type = "text";
             showIcon.style.display = "none";
             hideIcon.style.display = "block";
-       });
+        });
 
-       hideIcon.addEventListener("click", function() {
+        hideIcon.addEventListener("click", function() {
             passwordInput.type = "password";
             hideIcon.style.display = "none";
             showIcon.style.display = "block";
-       });
+        });
     </script>
 </body>
 </html>
