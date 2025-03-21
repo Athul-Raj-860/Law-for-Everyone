@@ -418,7 +418,8 @@ def payment(request, Book_Id):
             context = {
                 'Lawyer': Lawyer,
                 'Lawyer_details': Lawyer_details,
-                'Payment_Status': "Payment Successful, Appointment Booked!",
+                'Payment_Status': "Payment Successful "
+                                  " Appointment Booked!",
                 'payment_success': True
             }
             return render(request, "AppointmentPayment.html", context)
@@ -517,16 +518,12 @@ def case_history(request):
     User = request.session["User_Id"]
     r = Register.objects.get(User_Id=User)
 
-    # Use filter() to get all User_Details associated with the user
     user_details_list = User_Details.objects.filter(User=r.User_Id)
+    print(user_details_list)
+    case_ids = user_details_list.values_list('Case_Id', flat=True)
 
-    # Initialize an empty queryset for case_list
-    case_list = Case_Details.objects.none()
-
-    # Iterate over the user details list and accumulate related case details
-    for user_details in user_details_list:
-        case_list |= Case_Details.objects.filter(Case=user_details.Case_Id)
-
+    # Filter Case_Details using the list of Case_Id values
+    case_list = Case_Details.objects.filter(Case__in=case_ids)
     # Get filter, sort, search, and page parameters from GET data
     filter_data = request.GET.get("Filter", "All")
     sort = request.GET.get("Sort", "All")
@@ -535,17 +532,17 @@ def case_history(request):
 
     # Apply search filter if provided
     if search:
-        case_list = case_list.filter(Complaint_Type__icontains=search)
+        case_list = case_list.filter(Complaint_Subject__icontains=search)
 
     # Apply category filter if not 'All'
     if filter_data != "All":
         case_list = case_list.filter(Complaint_Type=filter_data)
 
     # Apply sorting
-    if sort == "Name_asc":
-        case_list = case_list.order_by("Complaint_Type")
-    elif sort == "Name_desc":
-        case_list = case_list.order_by("-Complaint_Type")
+    if sort == "Subject_asc":
+        case_list = case_list.order_by("Complaint_Subject")
+    elif sort == "Subject_desc":
+        case_list = case_list.order_by("-Complaint_Subject")
 
     # Paginate the results (8 items per page)
     paginator = Paginator(case_list, 8)
@@ -553,7 +550,7 @@ def case_history(request):
 
     # Render the template with context
     return render(request, "RegisteredCases.html", {
-        "case_list": page_obj,  # Pass the list of case pages to the template
+        "page_obj": page_obj,  # Pass the list of case pages to the template
         "Filter": filter_data,
         "Sort": sort,
         "Search": search,

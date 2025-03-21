@@ -31,9 +31,10 @@
 
         /* Navbar Styles */
         .navbar {
-            background-color: #1d1d1d;
+           background-color: rgba(0, 0, 0, 0.7);
             padding: 1rem 2rem;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
         }
 
         .navbar-brand h1 {
@@ -260,16 +261,9 @@
             text-decoration: none;
         }
 
-        /* Animation */
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-                transform: translateY(20px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
+         .navbar.scrolled {
+            background-color: rgba(0, 0, 0, 0.9); /* Darker background on scroll */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow on scroll */
         }
 
         /* Media Query for Smaller Screens */

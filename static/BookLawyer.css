@@ -1,0 +1,129 @@
+ {% load static %}
+body {
+    font-family: 'Arial', sans-serif;
+    background-image: url("../static/images/book.jpg");
+    background-color: #333;
+    background-size: cover;
+    background-position: center;
+    color: #f4f4f4;
+    padding: 50px 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+}
+
+h1 {
+    text-align: center;
+     color: #00c8ff;
+    margin-bottom: 20px;
+    font-size: 36px;
+    font-weight: bold;
+}
+
+.Booking-container {
+    background-color: rgba(33, 37, 41, 0.9);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    max-width: 1000px;
+    width: 100%;
+}
+
+.Booking-form input,
+.Booking-form select {
+    width: 100%;
+    padding: 15px;
+    margin: 12px 0;
+    border-radius: 8px;
+    font-size:15px;
+    border: 1px solid #555; /* Light border color */
+    background-color: #333; /* Dark input fields */
+    color: #fff;
+    transition: border-color 0.3s ease-in-out;
+}
+
+.Booking-form input::placeholder,
+.Booking-form select::placeholder {
+      color: #fff;
+}
+
+.Booking-form input:focus,
+.Booking-form select:focus {
+    border-color: #007bff;
+    outline: none;
+    background-color: #343a40;
+}
+
+.Booking-form button {
+    width: 100%;
+    padding: 15px;
+    background-color: #00c8ff; /* Blue background */
+    color: white;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease-in-out;
+}
+
+.Booking-form button:hover {
+    background-color: #0056b3;
+    transform: translateY(-2px);
+}
+
+.Booking-form button:active {
+    background-color: #003b6d;
+    transform: translateY(2px);
+}
+.place {
+    display: flex;
+    gap: 20px; /* Optional, to add some spacing between the inputs */
+}
+
+.place input {
+    flex: 1; /* Ensures the inputs take equal width */
+}
+
+
+.filter-container select {
+    width: 100%;
+    padding: 15px;
+    font-size: 16px;
+    border-radius: 8px;
+    transition: border-color 0.3s ease-in-out;
+    color: #fff;
+}
+
+.filter-container select:focus {
+    border-color: #007bff;
+}
+
+.form-header {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.col-md-6 {
+    padding: 10px;
+}
+
+.row {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+}
+
+@media (max-width: 768px) {
+    .Booking-container {
+        padding: 20px;
+    }
+
+    h1 {
+        font-size: 28px;
+    }
+
+    .Booking-form {
+        padding: 30px;
+    }
+}

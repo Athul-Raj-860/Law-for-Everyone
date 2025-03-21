@@ -7,92 +7,173 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <title>Payment Gateway</title>
     <style>
+        /* General Body Styling */
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background-color: #f1f5f9;
-            padding: 20px;
+            background-color: #121212; /* Dark background */
+            color: #ffffff; /* White text for contrast */
+            padding: 40px 0;
+            margin: 0;
         }
+
+        /* Heading */
         h1 {
             text-align: center;
-            color: #007bff;
-            margin-bottom: 30px;
-            font-size: 36px;
-            font-weight: bold;
+            color: #00c8ff; /* Light blue for heading */
+            margin-bottom: 40px;
+            font-size: 42px;
+            font-weight: 600;
         }
+
+        /* Payment Container */
         .payment-container {
-            background-color: #ffffff;
-            padding: 40px;
+            background-color: #1c1c1c; /* Dark container */
+            padding: 30px;
             border-radius: 10px;
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
-            max-width: 1000px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 950px;
             margin: 0 auto;
+            border: 1px solid #333;
         }
-        .payment-form input, .payment-form select, .payment-form textarea {
+
+        /* Payment Form Styling */
+        .payment-form input, .payment-form select {
             width: 100%;
-            padding: 12px;
-            margin: 12px 0;
+            padding: 12px 15px;
+            margin: 10px 0;
             border-radius: 8px;
-            border: 1px solid #ddd;
+            border: 1px solid #555; /* Light border color */
+            background-color: #333; /* Dark input fields */
+            color: #ffffff;
             font-size: 15px;
             transition: border-color 0.3s ease-in-out;
         }
-        .payment-form input:focus, .payment-form select:focus, .payment-form textarea:focus {
-            border-color: #007bff;
+
+        /* Focus Effect for Input Fields */
+        .payment-form input:focus, .payment-form select:focus {
+            border-color: #00c8ff; /* Blue border on focus */
             outline: none;
         }
-        .payment-form textarea {
-            height: 120px;
+        .payment-form input::placeholder,
+        .payment-form select::placeholder {
+              color: #fff;
         }
-        .payment-form .col-md-6 {
-            padding: 20px;
-            border-right: 1px solid #ddd;
-        }
+
+
+        /* Column Layout for the Payment Form */
         .payment-form .row {
             display: flex;
-            flex-wrap: wrap;
+            gap: 30px;
         }
+
+        .payment-form .col-md-6 {
+            flex: 1;
+            padding: 20px;
+        }
+
         .payment-form .col-md-6:last-child {
-            border-right: none;
+            border-left: 1px solid #444;
         }
+
         .payment-form h3 {
-            color: #333;
+            color: #ffffff;
             font-size: 22px;
             margin-bottom: 20px;
+            font-weight: 600;
         }
+
+        /* Submit Button Styling */
         .payment-form button {
             width: 100%;
             padding: 15px;
-            background-color: #007bff;
+            background-color: #00c8ff; /* Blue background */
             color: white;
             border: none;
             border-radius: 8px;
             font-size: 18px;
             cursor: pointer;
             transition: background-color 0.3s ease;
+            box-shadow: 0 3px 6px rgba(0, 0, 0, 0.1);
         }
+
+        /* Button Hover Effect */
         .payment-form button:hover {
-            background-color: #0056b3;
+            background-color: #00a6cc; /* Darker blue on hover */
         }
+
+        /* Button Active State */
         .payment-form button:active {
-            background-color: #003b6d;
+            background-color: #008f99; /* Even darker blue */
         }
-        .payment-form p {
+
+        /* Modal */
+        .modal-content {
+            background-color: #2c2c2c; /* Dark modal background */
+            color: #ffffff; /* White text */
+            border-radius: 10px;
+        }
+
+        .modal-header {
+            background-color: #00c8ff; /* Blue header */
+            color: white;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+
+        .modal-title {
+            font-weight: 600;
+        }
+
+        .modal-body p {
             font-size: 16px;
-            margin-top: 10px;
-            font-weight: bold;
+            margin-bottom: 10px;
         }
+
+        /* Modal Footer */
+        .modal-footer {
+            display: flex;
+            justify-content: space-between;
+            padding: 20px;
+        }
+
+        .modal-footer button {
+            background-color: #ff6f61; /* Orange button */
+            color: white;
+            border-radius: 5px;
+            padding: 8px 15px;
+            border: none;
+            font-size: 16px;
+        }
+
+        .modal-footer button:hover {
+            background-color: #ff4b40;
+        }
+
+        .modal-footer button:active {
+            background-color: #e14336;
+        }
+
+        /* Extra Styling for Inputs and Select */
         select {
             cursor: pointer;
         }
+
+        .Check_Cvv {
+            color: red;
+            font-size: 14px;
+            margin-top: 5px;
+        }
+
         .receipt-info {
             display: none;
         }
     </style>
 </head>
 <body>
-    <h1>Payment Gateway</h1>
+
     <div class="payment-container">
         <form class="payment-form" id="paymentForm" method="POST">
+             <h1>Payment Gateway</h1>
             {% csrf_token %}
             <div class="row">
                 <div class="col-md-6">
@@ -107,8 +188,8 @@
                     <h3>Payment Information</h3>
                     <input type="text" name="CardName" id="CardName" placeholder="Enter Name on Card" required>
                     <input type="text" name="CardNumber" id="CardNumber" placeholder="Enter Card Number" required>
-                    <div class="d-flex">
-                        <select name="CardExpiryMonth" id="Month" class="me-3">
+                    <div class="d-flex gap-3">
+                        <select name="CardExpiryMonth" id="Month">
                             <option value="" selected>Select Expiry Month</option>
                             <option value="Jan">Jan</option>
                             <option value="Feb">Feb</option>
@@ -123,7 +204,7 @@
                             <option value="Nov">Nov</option>
                             <option value="Dec">Dec</option>
                         </select>
-                        <select name="CardExpiryYear" id="Year" class="me-3">
+                        <select name="CardExpiryYear" id="Year">
                             <option value="" selected>Select Expiry Year</option>
                             <option value="2025">2025</option>
                             <option value="2026">2026</option>
@@ -147,15 +228,14 @@
         </form>
     </div>
 
-    <!-- The Modal -->
+    <!-- Modal for Payment Status -->
     <div class="modal" id="myModal">
         <div class="modal-dialog">
             <div class="modal-content">
-                <!-- Modal Header -->
+              <div class="print-page">
                 <div class="modal-header">
                     <h4 class="modal-title">{{ Payment_Status }}</h4>
                 </div>
-                <!-- Modal Body -->
                 <div class="modal-body">
                     <p><strong>Lawyer Name:</strong> {{ Lawyer.Name }}</p>
                     <p><strong>Category:</strong> {{ Lawyer.Category }}</p>
@@ -163,9 +243,9 @@
                     <p><strong>Appointment Time:</strong> {{ Lawyer.Appointment_Time }}</p>
                     <p><strong>Price:</strong> ${{ Lawyer_details.Price }}</p>
                 </div>
-                <!-- Modal Footer -->
+              </div>
                 <div class="modal-footer">
-                    <button class="btn" onclick="printModal()">Print Receipt</button>
+                    <button class="btn btn-primary" onclick="printModal()">Print Receipt</button>
                     <button type="button" class="btn btn-danger" onclick="window.location.href='/home'">Close</button>
                 </div>
             </div>
@@ -191,24 +271,16 @@
                 CvvChecker.style.display = "none";
             }
         });
+
         function printModal() {
-        // Get the modal content HTML
-        var modalContent = document.querySelector('.modal-content').outerHTML;
-
-        // Open a new window for printing
-        var printWindow = window.open('', '', 'height=600,width=800');
-
-        // Write the HTML structure to the new window
-        printWindow.document.write('<html><head><title>Print Receipt</title>');
-        printWindow.document.write('<style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }</style>');
-        printWindow.document.write('</head><body>');
-        printWindow.document.write(modalContent);
-        printWindow.document.write('</body></html>');
-
-        // Close the document stream and trigger print
-        printWindow.document.close();
-        printWindow.print();
-    }
+            var modalContent = document.querySelector('.print-page').outerHTML;
+            var printWindow = window.open('', '', 'height=600,width=800');
+            printWindow.document.write('<html><head><title>Print Receipt</title><style>body { font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif; margin: 20px; }</style></head><body>');
+            printWindow.document.write(modalContent);
+            printWindow.document.write('</body></html>');
+            printWindow.document.close();
+            printWindow.print();
+        }
     </script>
 </body>
 </html>
