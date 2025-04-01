@@ -29,6 +29,7 @@ urlpatterns = [
     path('home/',views.home,name='home'),
     path('logout/',views.logout,name='logout'),
     path('update_user/<int:id>/',views.update_user,name='update_user'),
+    path('profile/<int:id>/',views.update_user,name='profile'),
     path('lawyer/',views.lawyer_list,name='lawyer_list'),
     path('register_case/',views.register_case,name='register_case'),
     path('emergency_numbers/', views.emergency_numbers, name='emergency_numbers'),

@@ -164,23 +164,22 @@ def update_user(request,id):
         user.Name = request.POST.get('Name')
         user.Email = request.POST.get('Email')
         user.Number = request.POST.get('Number')
-        try:
+        user.Username = request.POST.get('Username')
 
-            New_Password = request.POST.get('NewPassword')
-            ConfirmPassword = request.POST.get('Password1')
+        New_Password = request.POST.get('NewPassword')
+        ConfirmPassword = request.POST.get('ConfirmPassword')
+        if New_Password and ConfirmPassword:
             if New_Password == ConfirmPassword:
-                    hashed_password = make_password(New_Password)
-                    user.Password = hashed_password
-                    user.save()
-                    return redirect("home")
-            else:
-                    return render(request, "Update_User.html.html", {"Error": "Password Doesnot Match"})
-        except:
-          user.save()
-          return redirect("home")
+                hashed_password = make_password(New_Password)
+                user.Password = hashed_password
+        else:
+                return render(request,"MyProfile.html", {"user":user,"Error": "Password Does not Match"})
+
+        user.save()
+        return redirect("profile", id=user.User_Id)
 
 
-    return render(request,"Update_User.html",{'user':user})
+    return render(request,"MyProfile.html",{'user':user})
 
 
 

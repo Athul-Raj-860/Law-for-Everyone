@@ -261,10 +261,7 @@
             text-decoration: none;
         }
 
-         .navbar.scrolled {
-            background-color: rgba(0, 0, 0, 0.9); /* Darker background on scroll */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); /* Stronger shadow on scroll */
-        }
+
 
         /* Media Query for Smaller Screens */
         @media (max-width: 768px) {
@@ -298,7 +295,7 @@
                         <a class="nav-link" href="/home">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/update_user/{{ r.User_Id }}">My Profile</a>
+                        <a class="nav-link" href="/profile/{{ r.User_Id }}">My Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/basic_laws">Basic Laws</a>

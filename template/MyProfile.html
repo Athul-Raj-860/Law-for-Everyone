@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My profile / update Form</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+    <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+    <link href="https://fonts.googleapis.com/css?family=Montserrat:400,800" rel="stylesheet">
+    <style>
+        {% load static %}
+        body {
+            font-family: 'Roboto', sans-serif;
+            color: #f0f0f0;
+            line-height: 1.6;
+            font-family: 'Arial', sans-serif;
+            background-image: url("{% static 'images/updateuser.jpg' %}");
+            background-color: #333;
+            background-size: cover;
+            background-position: center;
+
+        }
+
+        h1, h2 {
+            font-weight: bold;
+            margin: 0;
+            color: white;
+        }
+
+
+          /* Navbar Styles */
+        .navbar {
+           background-color: rgba(0, 0, 0, 0.7);
+            padding: 1rem 2rem;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+            transition: background-color 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .navbar-brand h1 {
+            font-family: 'Roboto', sans-serif;
+            font-weight: 700;
+            font-size: 2.5rem;
+            color: #fff;
+            margin: 0;
+        }
+
+        .navbar-nav .nav-item a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 500;
+            padding: 0.75rem 1.5rem;
+            text-transform: uppercase;
+            transition: color 0.3s;
+        }
+
+        .navbar-nav .nav-item a:hover {
+            color: #007bff;
+        }
+
+        .btn-info {
+            background-color: #007bff;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 25px;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+        }
+
+        .btn-info:hover {
+            background-color: #0056b3;
+        }
+
+        .btn-info a {
+            color: #fff;
+            text-decoration: none;
+        }
+
+       .form-group label{
+            text-align:left;
+            border-radius:10px;
+
+       }
+
+        .container a {
+            color: white;
+            font-size: 14px;
+            text-decoration: none;
+            margin: 15px 0;
+        }
+
+        .container button {
+            border-radius: 20px;
+            border: 1px solid #FF4B2B;
+            background-color: #FF4B2B;
+            color: #FFFFFF;
+            font-size: 12px;
+            font-weight: bold;
+            padding: 12px 45px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            transition: transform 80ms ease-in;
+        }
+
+        .container button:active {
+            transform: scale(0.95);
+        }
+
+        button:focus {
+            outline: none;
+        }
+
+        button.ghost {
+            background-color: transparent;
+            border-color: #FFFFFF;
+        }
+
+        .container form {
+            background-color: #000000; /* Changed to black */
+            color: white; /* Set font color to white */
+            display: flex;
+
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 50px;
+            height: 100%;
+            
+        }
+
+        .container input {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+        }
+
+        .container {
+            background-color: #000000; /* Set the container color to black */
+            border-radius: 10px;
+            box-shadow: 0 14px 28px rgba(0, 0, 0, 0.25), 0 10px 10px rgba(0, 0, 0, 0.22);
+            position: relative;
+            overflow: hidden;
+            width: 768px;
+            max-width: 100%;
+            min-height: 750px;
+            margin-top:20px;
+            margin-bottom:20px;
+        }
+
+        .form-container {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            transition: all 0.6s ease-in-out;
+        }
+         /* Avatar Circle */
+        .avatar-circle {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background-color: #007bff;
+            color: white;
+            font-size: 30px;
+            display: inline-block;
+            text-align: center;
+            line-height: 80px;
+            margin-bottom: 20px;
+            font-weight: bold;
+            margin-top: 10px;
+        }
+
+        .my-profile-container {
+            left: 0;
+            width: 50%;
+            z-index: 2;
+        }
+
+        .container.right-panel-active .my-profile-container {
+            transform: translateX(100%);
+        }
+
+        .update-profile-container {
+            left: 0;
+            width: 50%;
+            opacity: 0;
+            z-index: 1;
+        }
+
+        .container.right-panel-active .update-profile-container {
+            transform: translateX(100%);
+            opacity: 1;
+            z-index: 5;
+            animation: show 0.6s;
+        }
+        .password-input-validator {
+            position: relative;
+        }
+
+        #NewPassword {
+            background-color: #eee;
+            border: none;
+            padding: 12px 15px;
+            margin: 8px 0;
+            width: 100%;
+            padding-right: 40px; /* Add space for the icon inside the input */
+            color:black;
+        }
+
+        #toggle-icon {
+             position: absolute;
+            right: 10px;
+            top: 65%;
+            transform: translateY(-50%);
+            cursor: pointer;
+            color:black;
+        }
+
+        #toggle-icon ion-icon {
+            font-size: 20px; /* Adjust size of the icon */
+        }
+
+
+        @keyframes show {
+            0%, 49.99% {
+                opacity: 0;
+                z-index: 1;
+            }
+
+            50%, 100% {
+                opacity: 1;
+                z-index: 5;
+            }
+        }
+
+        .overlay-container {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            width: 50%;
+            height: 100%;
+            overflow: hidden;
+            transition: transform 0.6s ease-in-out;
+            z-index: 100;
+        }
+
+        .container.right-panel-active .overlay-container {
+            transform: translateX(-100%);
+        }
+
+        .overlay {
+            background: #0066cc; /* Changed overlay color to blue */
+            color: #FFFFFF;
+            position: relative;
+            left: -100%;
+            height: 100%;
+            width: 200%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .container.right-panel-active .overlay {
+            transform: translateX(50%);
+        }
+
+        .overlay-panel {
+            position: absolute;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            padding: 0 40px;
+            text-align: center;
+            top: 0;
+            height: 100%;
+            width: 50%;
+            transform: translateX(0);
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .overlay-left {
+            transform: translateX(-20%);
+        }
+
+        .container.right-panel-active .overlay-left {
+            transform: translateX(0);
+        }
+
+        .overlay-right {
+            right: 0;
+            transform: translateX(0);
+        }
+
+        .container.right-panel-active .overlay-right {
+            transform: translateX(20%);
+        }
+
+        /* Footer */
+        .footer {
+            background-color: #1d1d1d;
+            color: #f0f0f0;
+            padding: 3rem 2rem;
+            text-align: center;
+            box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.5);
+        }
+
+        .footer h1 {
+            font-size: 2.8rem;
+            font-weight: 700;
+            color: #007bff;
+            margin-bottom: 1.5rem;
+        }
+
+        .footer-links {
+            list-style-type: none;
+            padding: 0;
+            margin-bottom: 2rem;
+        }
+
+        .footer-links li {
+            display: inline-block;
+            margin: 0 1rem;
+        }
+
+        .footer-links a {
+            color: #f0f0f0;
+            text-decoration: none;
+            font-size: 1.2rem;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #007bff;
+            text-decoration: underline;
+        }
+
+        .social-media ion-icon {
+            font-size: 2rem;
+            color: #fff;
+            margin: 0 0.5rem;
+            transition: color 0.3s;
+        }
+
+        .social-media ion-icon:hover {
+            color: #007bff;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #444;
+            padding-top: 1rem;
+        }
+
+        .footer-bottom p {
+            font-size: 1rem;
+            margin: 0.5rem 0;
+        }
+
+        .footer-bottom a {
+            color: #007bff;
+            text-decoration: none;
+        }
+    </style>
+</head>
+<body>
+ <!-- Header -->
+    <div class="header">
+        <nav class="navbar navbar-expand-sm navbar-light bg-dark" role="navigation">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#">
+                    <h1>LAW for Everyone</h1>
+                </a>
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link" href="/home">Home</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/update_user/{{ r.User_Id }}">My Profile</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/basic_laws">Basic Laws</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/register_case">Register Case</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/lawyer">Lawyers</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/logout">Log Out</a>
+                    </li>
+                    <li class="nav-item">
+                        <button type="button" class="btn btn-info">
+                            <a href="/emergency_numbers" class="text-white">Emergency Numbers</a>
+                        </button>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+<div class="container" id="container">
+    <!-- Update Profile Form -->
+    <div class="form-container update-profile-container">
+        <form method="POST">
+            <h1>Update Profile</h1>
+             {% csrf_token %}
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" name="Name" id="name" value="{{ user.Name }}"  required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Email">Email Address</label>
+                    <input type="email" name="Email" id="Email" value="{{ user.Email }}"  required>
+                </div>
+
+                <div class="form-group">
+                    <label for="Number">Phone Number</label>
+                    <input type="text" name="Number" id="Number" value="{{ user.Number }}"  required>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text" name="Username" id="Username" value="{{ user.Username }}" required>
+                </div>
+                <button type="button" onclick="Update_Password()">Update Password</button><br>
+                <div class="form-group" id="Password" style="display:none">
+                   <div class="password-input-validator">
+                        <label for="NewPassword">New Password</label>
+                        <input type="password" name="NewPassword" id="NewPassword" placeholder="Enter Password">
+                        <span class="toggle-icon" id="toggle-icon"><ion-icon name="eye-outline" name="show" id="show"></ion-icon>
+                        <ion-icon name="eye-off-outline" name="hide" id="hide" style="display: none;"></ion-icon></span>
+                   </div>
+
+                    <div id="message"></div>
+
+                    <label for="ConfirmPassword">Confirm New Password</label>
+                    <input type="password" name="ConfirmPassword" placeholder="Re-type Password" id="ConfirmPassword">
+
+                </div>
+
+                <button type="submit" >Update</button>
+            </form>
+    </div>
+
+    <!-- My Profile Form -->
+    <div class="form-container my-profile-container">
+        <form>
+            <h1>My Profile</h1>
+             <span class="avatar-circle">{{ user.Name | slice:":1" }}</span>
+            <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text"   value="{{ user.Name }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="Email">Email Address</label>
+                    <input type="email"   value="{{ user.Email }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="Number">Phone Number</label>
+                    <input type="text"   value="{{ user.Number }}" readonly>
+                </div>
+
+                <div class="form-group">
+                    <label for="username">Username</label>
+                    <input type="text"   value="{{ user.Username }}"  readonly>
+                </div>
+        </form>
+    </div>
+
+    <!-- Overlay (used for transitions) -->
+    <div class="overlay-container">
+        <div class="overlay">
+            <div class="overlay-panel overlay-left">
+                <h1>My Profile</h1>
+                <button class="ghost" id="my_profile">My Profile</button>
+            </div>
+            <div class="overlay-panel overlay-right">
+                <h1>Update Profile</h1>
+                <button class="ghost" id="update_profile">Update</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+    <!-- Footer -->
+    <div class="footer">
+        <h1>LAW for Everyone</h1>
+        <ul class="footer-links">
+            <li><a href="/home">Home</a></li>
+            <li><a href="/update_user/{{ r.User_Id }}">My Profile</a></li>
+            <li><a href="/basic_laws">Basic Laws</a></li>
+            <li><a href="/register_case">Register Case</a></li>
+            <li><a href="/lawyer">Lawyers</a></li>
+            <li><a href="/logout">Log Out</a></li>
+            <li>
+                <button type="button" class="btn btn-info">
+                    <a href="/emergency_numbers">Emergency Numbers</a>
+                </button>
+            </li>
+        </ul>
+        <div class="social-media">
+            <ion-icon name="logo-facebook" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-youtube" style="color:red;"></ion-icon>
+            <ion-icon name="logo-linkedin" style="color:blue;"></ion-icon>
+            <ion-icon name="logo-discord" style="color:purple;"></ion-icon>
+        </div>
+        <div class="footer-bottom">
+            <p>© 2025 Law For Everyone. All Rights Reserved.</p>
+            <p><a href="#">Privacy Policy</a> | <a href="#">Terms of Service</a></p>
+        </div>
+    </div>
+
+<script>
+    const update_profileButton = document.getElementById('update_profile');
+    const my_profileButton = document.getElementById('my_profile');
+    const container = document.getElementById('container');
+
+    update_profileButton.addEventListener('click', () => {
+        container.classList.add("right-panel-active");
+    });
+
+    my_profileButton.addEventListener('click', () => {
+        container.classList.remove("right-panel-active");
+    });
+     function Update_Password() {
+            var passwordContainer = document.getElementById('Password');
+            var NewPassword = document.getElementById('NewPassword');
+            var ConfirmPassword = document.getElementById('ConfirmPassword');
+
+            if(passwordContainer.style.display = passwordContainer.style.display === 'none' || passwordContainer.style.display === ''){
+                  passwordContainer.style.display = 'block';
+                 NewPassword.setAttribute('required', 'true');
+                 ConfirmPassword.setAttribute('required', 'true');
+               } else{
+                    passwordContainer.style.display = 'none';
+                    newPasswordField.removeAttribute('required');
+                    confirmPasswordField.removeAttribute('required');
+               }
+       }
+
+       document.getElementById('NewPassword').addEventListener('input', function () {
+           const password = this.value;
+           const PasswordChecker = document.getElementById("message");
+           PasswordChecker.innerHTML = ""; // Clear previous messages
+
+           const LengthCheck = password.length >= 8;
+           const UpperCaseCheck = /[A-Z]/.test(password);
+           const LowerCaseCheck = /[a-z]/.test(password);
+           const NumberCheck = /\d/.test(password);
+           const SpecialCharacterCheck = /[!@#$%^&*()?><|<>:;]/.test(password);
+
+           let messages = [];
+
+            if (!LengthCheck) {
+                messages.push("Password length is less than 8 characters");
+            }
+            if (!UpperCaseCheck) {
+                messages.push("Password requires at least 1 uppercase letter");
+            }
+            if (!LowerCaseCheck) {
+                messages.push("Password requires at least 1 lowercase letter");
+            }
+            if (!NumberCheck) {
+                messages.push("Password requires at least 1 number");
+            }
+            if (!SpecialCharacterCheck) {
+                messages.push("Password requires at least 1 special character");
+            }
+
+            if (messages.length > 0) {
+                PasswordChecker.innerHTML = messages.join("<br>");
+                PasswordChecker.style.color = "red";
+            } else {
+                PasswordChecker.innerHTML = "Password is strong";
+                PasswordChecker.style.color = "green";
+            }
+        });
+
+        const passwordInput = document.getElementById("NewPassword");
+        const showIcon = document.getElementById("show");
+        const hideIcon = document.getElementById("hide");
+
+        showIcon.addEventListener("click", function() {
+            passwordInput.type = "text";
+            showIcon.style.display = "none";
+            hideIcon.style.display = "block";
+        });
+
+        hideIcon.addEventListener("click", function() {
+            passwordInput.type = "password";
+            hideIcon.style.display = "none";
+            showIcon.style.display = "block";
+        });
+</script>
+
+</body>
+</html>
