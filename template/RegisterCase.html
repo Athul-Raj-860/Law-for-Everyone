@@ -13,7 +13,7 @@
             background-color: #333;
             background-size: cover;
             background-position: center;
-            color: #f4f4f4; /* Light text color for better contrast */
+            color: fff; /* Light text color for better contrast */
             padding: 20px;
         }
 
@@ -111,6 +111,13 @@
         select {
             cursor: pointer;
         }
+        .Register-form input::placeholder,
+        .Register-form select::placeholder,
+        .Register-form textarea::placeholder {
+            color: #fff; /* Set the placeholder text color to white */
+            opacity: 1;  /* Ensure full opacity of the placeholder text */
+        }
+
 
         /* Add spacing between form sections */
         .Register-form .row > div {

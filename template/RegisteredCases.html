@@ -477,7 +477,7 @@
                     </select>
                 </div>
                 <div class="Filter col-md-6  align-items-center">
-                    <label for="filter" >Filter by Category:</label>
+                    <label for="Filter" >Filter by Category:</label>
                     <select id="Filter" name="Filter" onchange="this.form.submit()" class="form-select ms-2">
                         <option value="All" selected>All</option>
                         <option value="Criminal" {% if Filter == 'Criminal' %}selected{% endif %}>Criminal</option>
@@ -512,31 +512,31 @@
 
                 <!-- Modal for each case -->
                 <div class="modal fade" id="modal-{{ i.Case.Case_Id }}" tabindex="-1" aria-labelledby="modalLabel-{{ i.Case }}" aria-hidden="true">
-                   <div class="modal-dialog">
-                     <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="modalLabel-{{ i.Case }}">User Details</h5>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            {% for user in user_details_list %}
-                                {% if user.Case_Id == i.Case.Case_Id %}
-                                    <p><strong>Name:</strong> {{ user.Name }}</p>
-                                    <p><strong>Number:</strong> {{ user.Number }}</p>
-                                    <p><strong>Email:</strong> {{ user.Email }}</p>
-                                    <p><strong>Address:</strong> {{ user.Address }}</p>
-                                    <p><strong>City:</strong> {{ user.City }}</p>
-                                    <p><strong>District:</strong> {{ user.District }}</p>
-                                    <p><strong>State:</strong> {{ user.State }}</p>
-                                {% endif %}
-                            {% endfor %}
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        </div>
-                     </div>
-                   </div>
-                </div>
+   <div class="modal-dialog">
+     <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel-{{ i.Case }}">User Details</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            {% for user in user_details_list %}
+                {% if user.Case_Id == i.Case.Case_Id %}
+                    <p><strong>Name:</strong> {{ user.Name }}</p>
+                    <p><strong>Number:</strong> {{ user.Number }}</p>
+                    <p><strong>Email:</strong> {{ user.Email }}</p>
+                    <p><strong>Address:</strong> {{ user.Address }}</p>
+                    <p><strong>City:</strong> {{ user.City }}</p>
+                    <p><strong>District:</strong> {{ user.District }}</p>
+                    <p><strong>State:</strong> {{ user.State }}</p>
+                {% endif %}
+            {% endfor %}
+        </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+     </div>
+   </div>
+</div>
                 {% endfor %}
             </div>
         </div>
